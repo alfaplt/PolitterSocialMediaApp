@@ -1,33 +1,35 @@
-﻿using Core.Entities;
+﻿using Business.Abstract;
+using Core.Entities;
 using DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mvc.Controllers
 {
     public class FavoriteController : Controller
     {
         private readonly AppDbContext _context;
-		public FavoriteController(AppDbContext context)
+        private readonly IFavoriteService _favoriteService;
+		public FavoriteController(AppDbContext context, IFavoriteService favoriteService)
 		{
 			_context = context;
+			_favoriteService = favoriteService;
 		}
-		public IActionResult Favorite(int Id)
+		public async Task<IActionResult> FavoriteAsync(int Id)
         {
-           
+
             var userName = User.Identity.Name;
             AppUser user = _context.Users.Where(x => x.UserName == userName).FirstOrDefault();
 
             var favs = _context.Favorites.Include(x => x.User).Include(x => x.Post).ToList();
 
-            var fav = _context.Favorites
-                .FirstOrDefault(x => x.AppUserId == user.Id && x.PostId == Id);
+            var fav = _context.Favorites.FirstOrDefault(x => x.AppUserId == user.Id && x.PostId == Id);
 
             if (favs.Contains(fav))
             {
-                _context.Remove(fav);
-                _context.SaveChanges();
+                await _favoriteService.Unfavorite(fav);
             }
             else
             {
@@ -37,8 +39,7 @@ namespace Mvc.Controllers
                     PostId = Id
                 };
 
-                _context.Add(newFav);
-                _context.SaveChanges();
+                await _favoriteService.Favorite(newFav);
             }
 
             return RedirectToAction("Index", "Posts");

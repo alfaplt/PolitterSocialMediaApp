@@ -9,16 +9,18 @@ namespace DataAccess.Concrete
         private PostRepository _postRepository;
         private UserRepository _userRepository;
         private CommentRepository _commentRepository;
+		private FavoriteRepository _favoriteRepository;
 
-        public UnitOfWork(AppDbContext context)
+		public UnitOfWork(AppDbContext context)
         {
             _context = context;
         }
         public IPostRepository Posts => _postRepository = _postRepository ?? new PostRepository(_context);
         public IUserRepository Users => _userRepository = _userRepository ?? new UserRepository(_context);
         public ICommentRepository Comments => _commentRepository = _commentRepository ?? new CommentRepository(_context);
+		public IFavoriteRepository Favorites => _favoriteRepository = _favoriteRepository ?? new FavoriteRepository(_context);
 
-        public async Task<int> CommitAsync()
+		public async Task<int> CommitAsync()
         {
             return await _context.SaveChangesAsync();
         }
