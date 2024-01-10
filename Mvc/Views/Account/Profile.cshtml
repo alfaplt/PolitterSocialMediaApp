@@ -1,0 +1,99 @@
+﻿@model AppUser
+
+
+<div class="banner mb-5" style="background-image: url('/img/backgrounds/bg.jpg');">
+	<div class="banner-title d-flex flex-column justify-content-center align-items-center">
+		<img src=@Model.ProfilePicture alt="img" class="rounded-circle" width="200" height="200">
+		<h2 class=" text-light border border-light">Merhaba @Model.FirstName</h2>
+	</div>
+</div>
+
+
+<div class="row">
+<div class="col-md-6 offset-md-3 ">
+    <table class="table table-bordered table-hover ">
+
+            <tr>
+                <th>Ad: </th>
+                <td class="ml-5">@Model.FirstName</td>
+      
+            </tr>
+            <tr>
+                <th>Soyad</th>
+                <td>@Model.LastName</td>
+       
+            </tr>
+            <tr>
+                <th>Kullanıcı Adı</th>
+                <td>@Model.UserName</td>
+    
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@Model.Email</td>
+ 
+            </tr>
+            <tr>
+                <th>Telefon</th>
+                <td>@Model.PhoneNumber</td>
+
+            </tr>
+
+        </table>
+    <div class="middle-column">
+
+      @foreach(var post in Model.Posts)
+        {
+            <div class="card custombg">
+                <div class="card-body">
+                    <div class="media">
+                        <img src=@Model.ProfilePicture alt="img" width="55" height="55" class="rounded-circle mr-3">
+                        <div class="media-body">
+                            <div>
+                                <h5>@Model.FirstName @Model.LastName</h5>
+                                <h6 class="small">@($"@{Model.UserName}")</h6>
+                            </div>
+                            <hr>
+                            <p class="text-justify">
+                                @post.Content
+                            </p>
+                        </div>
+                        <small>@ViewData[post.Id.ToString()]</small>
+                    </div>
+                    <div @*buttons*@>
+                        <div class="btn-group text-sm-center float-right" role="group" aria-label="Basic example" style="margin-top:20px">
+
+                            <a asp-action="Favorite" asp-controller="Favorite" asp-route-id="@post.Id" style="margin-right:20px" type="button" class="btn btn-info rounded-circle btn-sm">
+                                <i class="bi-heart" style="color:black">
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+                                </i>
+                            </a>
+
+                            <a data-target="/Comments/_ListComments/@post.Id" data-toggle="modal" style="margin-right:20px" type="button" class="commentview btn btn-info btn-sm rounded-circle">
+                                <i class="bi-chat" style="color:black">
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4</span>
+                                </i>
+                            </a>
+
+                            @if (post.AppUser.UserName != User.Identity.Name)
+
+                            {
+                                <a style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-arrow-repeat"></i></a>
+                            }
+
+                            <a style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-send"></i></a>
+                        </div>
+
+                            <a asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id" class="btn btn-danger btn-sm rounded-circle float-left " style="margin-top:20px"><i class="bi-trash"></i></a>
+                     
+                    </div>
+                </div>
+            </div>
+            <br />
+        }
+    </div>
+</div>
+</div>
+
+
+

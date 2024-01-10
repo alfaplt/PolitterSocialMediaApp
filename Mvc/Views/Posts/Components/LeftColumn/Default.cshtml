@@ -1,0 +1,28 @@
+﻿@model AppUser
+
+<div class="col-md-3 ">
+    <div class="left-column">
+        <div class="card card-left1 mb-4">
+            <img src="/img/photo-1455448972184-de647495d428.jpg" alt="" class="card-img-top img-fluid">
+            <div class="card-body text-center ">
+                <img src=@Model.ProfilePicture alt="img" width="120" height="120" class="rounded-circle mt-n5">
+                <h5 class="card-title">@($"{@Model.FirstName} {@Model.LastName}")</h5>
+                <p class="card-text text-justify mb-2 text-center">Merhaba</p>
+                <ul class="list-unstyled nav justify-content-center">
+                    <li class="nav-item">Takipçi--<br> <strong>12M</strong></li></a> 
+                    <br />
+                    <li class="nav-item">-Takip<br> <strong>1</strong></li></a>
+                </ul>
+            </div>
+        </div>
+        <div class="card shadow-sm card-left2 mb-4">
+            <div class="card-body">
+                <h5 class="mb-3 card-title">Hakkında<a asp-controller="Account" asp-action="EditProfile" class="ml-3 btn btn-info">Profili Güncelle</a></h5>
+                <p class="card-text"> <i class="fas fa-user mr-2"></i>@($"@{Model.UserName}")</p>
+                <p class="card-text"> <i class="fas fa-phone mr-2"></i>@Model.PhoneNumber</p>
+                <p class="card-text"> <i class="fas fa-envelope mr-2"></i>@Model.Email</p>
+            </div>
+        </div>
+    </div>
+</div>
+ 

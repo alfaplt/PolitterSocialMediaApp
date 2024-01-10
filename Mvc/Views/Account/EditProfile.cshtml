@@ -1,0 +1,64 @@
+﻿@model AppUserDetailsDto
+
+<div class="banner mb-5" style="background-image: url('/img/backgrounds/bg.jpg');">
+	<div class="banner-title d-flex flex-column justify-content-center align-items-center">
+		<a href="#" onclick="alertFunc()"><img src=@Model.ProfilePicture alt="img" class="rounded-circle" width="200" height="200"></a>
+		@if(ViewBag.message == null)
+		{
+			<h2 class="mt-5 text-light border border-light">Bu Sayfadan Profilini Güncelleyebilirsin</h2>
+		}
+		else
+		{
+			<div class="alert alert-danger mt-5">@ViewBag.message</div>
+		}
+		
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<form class="form-group" asp-controller="Account" asp-action="EditProfile" enctype="multipart/form-data" method="post">
+
+			<div class="form-group">
+				<label>Profil Fotoğrafı:</label>
+				<div class="mb-1" style="height:100px">
+					<img src=@Model.ProfilePicture alt="img" class="rounded-circle" height="100">
+				</div>
+				<input type="file" asp-for="UploadProfilePicture" class="form-control text-danger" />
+			</div>
+			<div class="form-group">
+				<label>Adı:</label>
+				<input asp-for="FirstName" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label>Soyadı:</label>
+				<input asp-for="LastName" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label>Email:</label>
+				<input type="email" asp-for="Email" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label>Telefon:</label>
+				<input type="tel" asp-for="PhoneNumber" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label>Kullanıcı Adı:</label>
+				<input asp-for="UserName" class="form-control" />
+			</div>
+
+			<div class="text-danger" asp-validation-summary="All"></div>
+
+			<button class="btn btn-info" type="submit">Profili Güncelle</button>
+
+</form>
+			<a asp-action="ChangePassword" asp-controller="Account" class="btn btn-danger float-right">Parolayı Güncelle</a>
+	</div>
+</div>
+	
+<script>
+	function alertFunc() {
+		alert("Fotoğraf yüklemek için aşağıdaki 'Dosya Seç' butonuna tıklayınız");
+	}
+</script>
+

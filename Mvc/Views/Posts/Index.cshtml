@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Post>
+
+
+@await Html.PartialAsync("_CommentModal")
+
+<div class="row">
+    
+    @await Component.InvokeAsync("LeftColumn")
+
+    <div class="col-md-6  ">
+        <div class="middle-column">
+
+            <!------CreatePost------>  
+            <div class="card mb-4 ">
+                <div class="card-header bg-transparent">
+                    <form class="form-inline" asp-controller="Posts" asp-action="CreatePost" method="post">
+                        <div class="input-group w-100">
+                            <input type="text" maxlength="500" name="Content" id="message" placeholder="Paylaş..." class="form-control form-control-md">
+                            <button class="btn btn-info" type="submit">Paylaş</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!------ListPosts------>
+            @foreach(var post in Model)
+            {
+                <div class="card custombg">                        
+                    <div class="card-body">
+                        <div class="media">                             
+                            <img src=@post.AppUser.ProfilePicture alt="img" width="55" height="55" class="rounded-circle mr-3">
+                            <div class="media-body">
+                                <div>
+                                <h5>@post.AppUser.FirstName @post.AppUser.LastName</h5>
+                                <h6 class="small">@($"@{post.AppUser.UserName}")</h6>
+                                </div>                                   
+                                <hr>
+                                <p class="text-justify">
+                                    @post.Content
+                                </p>
+                            </div>
+                            <small>@ViewData[post.Id.ToString()]</small>
+                        </div>
+                        <div @*buttons*@ >
+                            <div class="btn-group text-sm-center float-right" role="group" aria-label="Basic example" style="margin-top:20px">
+
+                                <a asp-action="Favorite" asp-controller="Favorite" asp-route-id="@post.Id" style="margin-right:20px" type="button" class="btn btn-info rounded-circle btn-sm">
+                                    <i class="bi-heart" style="color:black">
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@post.Favorites.Count</span>
+                                    </i>
+                                </a>
+
+                                <a data-target="/Comments/_ListComments/@post.Id" data-toggle="modal" style="margin-right:20px" type="button" class="commentview btn btn-info btn-sm rounded-circle">
+                                    <i class="bi-chat" style="color:black">
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@post.Comments.Count</span>
+                                    </i>
+                                </a>
+
+                                @if (post.AppUser.UserName != User.Identity.Name)
+                                {
+                                    <a style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-arrow-repeat"></i></a>
+                                }
+                                
+                                <a style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-send"></i></a>
+                            </div>
+
+                            @if(post.AppUser.UserName == User.Identity.Name)
+                            {
+                                <a asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id" class="btn btn-danger btn-sm rounded-circle float-left " style="margin-top:20px"><i class="bi-trash"></i></a>
+                            }
+                        </div>
+                    </div>                
+                </div>
+                <br />
+            }
+        </div>
+    </div>
+
+    @await Component.InvokeAsync("RightColumn")
+   
+</div>
+
+
+

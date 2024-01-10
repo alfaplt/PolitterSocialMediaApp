@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Comment>
+
+    <!--CreateComment-->
+<div class="card mb-4 sticky-top">
+    <div class="card-header bg-transparent">
+        <form class="form-inline" asp-controller="Comments" asp-action="Create" asp-route-id="@ViewBag.Id" method="post">
+            <div class="input-group w-100">
+                <input type="text" maxlength="500" name="Content" placeholder="Yorum yap..." class="form-control form-control-md">
+                <button class="btn btn-info" type="submit">Yorumla</button>
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+
+<!--ListComments-->
+<ul class="list-unstyled">
+    @foreach (var comment in Model)
+    {
+        <li class="media hover-media ">
+            <img src="~/img/avatar-dhg.png" alt="img" width="60px" height="60px" class="rounded-circle mr-3">
+            <div class="media-body text-dark">
+                <h6 class="media-header">@($"@{comment.AppUser.UserName}")</h6>
+                <p class="media-text">@comment.Content</p>
+            </div>
+            <!--comment time-->
+            <small>@ViewData[comment.Id.ToString()]</small> 
+        
+        @if (comment.AppUser.UserName == User.Identity.Name)
+        {
+            <a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-danger btn-sm rounded-circle mt-auto" ><i class="bi-trash"></i></a>
+        }
+        </li>
+        <hr class="my-3">   
+    }
+</ul>

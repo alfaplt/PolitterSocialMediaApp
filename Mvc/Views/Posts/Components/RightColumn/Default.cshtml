@@ -1,0 +1,53 @@
+﻿@model List<Post>
+
+
+<div class="col-md-3">
+        <div class="right-column">
+            <!--Ads-->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h6 class="card-title text-center">Reklam</h6>
+                    <img src="/img/right1.jpg" alt="card-img" class="card-img mb-3">
+                    <p class="card-text text-justify"> <span class="h6">It might be time to visit Iceland.</span> Iceland is so chill, and everything looks cool here. Also, we heard the people are pretty nice.  What are you waiting for?</p>
+                    <a href="https://www.turkishairlines.com/tr-int/ucak-bileti/rezervasyon/" target="_blank" class="btn btn-outline-info card-link btn-sm">Bilet Al</a>
+                </div>
+            </div>
+            <!--FollowAdvicies-->
+            <div class="card shadow-sm mb-4">
+                <div clss="row">
+                <div class="card-body ">
+                    <h6 class="card-title text-center">Belki takip etmek istersin ;)</h6><hr />
+                    <table class="table ">
+                        <tr>
+                            <td>
+                                <h6 class="ml-4">@ViewBag.randomUser1</h6>
+                                <img src=@ViewBag.usrPp1 alt="img" width="50" height="50" class="rounded-circle mb-1 ml-4" />
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="ml-4">@ViewBag.randomUser2</h6>
+                                <img src=@ViewBag.usrPp2 alt="img" width="50" height="50" class="rounded-circle mb-1 ml-4">
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="ml-4">@ViewBag.randomUser3</h6>
+                                <img src=@ViewBag.usrPp3 alt="img" width="50" height="50" class="rounded-circle mb-1 ml-4">
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
