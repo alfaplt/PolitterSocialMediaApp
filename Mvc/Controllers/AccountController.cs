@@ -21,17 +21,19 @@ namespace Mvc.Controllers
 	{
 		private readonly SignInManager<AppUser> _signInManager;
 		private readonly UserManager<AppUser> _userManager;
+        private readonly IMailService _mailService;
 		private readonly IUserService _userService;
 		private readonly IMapper _mapper;
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper, IUserService userService)
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper, IUserService userService, IMailService mailService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
             _userService = userService;
+            _mailService = mailService;
         }
 
-		[AllowAnonymous]
+        [AllowAnonymous]
 		public IActionResult SignUp()
 		{
             return View();
@@ -132,14 +134,6 @@ namespace Mvc.Controllers
 			await _signInManager.SignOutAsync();
 			return RedirectToAction("Index","Home");
 		}
-
-        public async Task<IActionResult> Profile()
-        {
-            int id =(await _userManager.FindByNameAsync(User.Identity.Name)).Id;
-            AppUser user =await _userService.GetUserByIdWithPosts(id);
-
-            return View(user);
-        }
 
         public async Task<IActionResult> EditProfile()
 		{
@@ -256,8 +250,7 @@ namespace Mvc.Controllers
                         token = passwordResetToken
                     }, HttpContext.Request.Scheme);
 
-                    MailService mailService = new MailService();
-                    mailService.SendMailForResetPassword(user, passwordResetTokenLink);
+                    _mailService.SendMailForResetPassword(user, passwordResetTokenLink);
 
                     ViewBag.State = true;
                 }

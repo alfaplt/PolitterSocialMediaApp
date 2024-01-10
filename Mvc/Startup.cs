@@ -4,25 +4,23 @@ using Business.Concrete;
 using Business.Mapping;
 using Business.Validations.CustomValidations;
 using Business.Validations.UserValidations;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Core.Entities;
 using DataAccess;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 namespace Mvc
 {
@@ -57,6 +55,7 @@ namespace Mvc
             services.AddTransient<ICommentService, CommentService>();
             services.AddScoped<IMapper, Mapper>();
             services.AddTransient<IFavoriteService, FavoriteService>();
+            services.AddTransient<IMailService, MailService>();
             #endregion
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("connectionString")));
@@ -103,7 +102,7 @@ namespace Mvc
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -114,10 +113,6 @@ namespace Mvc
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller=Home}/{action=Index}/{id?}");
-
                 endpoints.MapDefaultControllerRoute();
             });
         }

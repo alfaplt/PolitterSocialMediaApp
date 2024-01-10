@@ -2,12 +2,20 @@
 using Core.Entities;
 using MailKit.Net.Smtp;
 using MimeKit;
+using Microsoft.Extensions.Configuration;
 
 namespace Business.Concrete
 {
 	public class MailService : IMailService
 	{
-		public void SendMailForResetPassword(AppUser user, string passwordResetTokenLink)
+		private readonly IConfiguration _configuration;
+		
+        public MailService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+    
+        public void SendMailForResetPassword(AppUser user, string passwordResetTokenLink)
 		{
 			MimeMessage mimeMessage = new();
 			MailboxAddress mailboxAddressFrom = new("XYZ Social App", "xyzsocialapp@polattest.site");
@@ -20,7 +28,8 @@ namespace Business.Concrete
 			mimeMessage.Subject = "Parola Sıfırlama Talebi";
 			SmtpClient client = new();
 			client.Connect("mail.polattest.site", 587, false);
-			client.Authenticate("xyzsocialapp@polattest.site", "***REMOVED***");
+			// Password coming from user secrets
+            client.Authenticate("xyzsocialapp@polattest.site", _configuration["Passwords:mailPassword"]);
 			client.Send(mimeMessage);
 			client.Disconnect(true);
 		}
