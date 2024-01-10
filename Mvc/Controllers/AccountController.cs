@@ -258,22 +258,6 @@ namespace Mvc.Controllers
 
                     MailService mailService = new MailService();
                     mailService.SendMailForResetPassword(user, passwordResetTokenLink);
-     //               MimeMessage mimeMessage = new();
-					//MailboxAddress mailboxAddressFrom = new("XYZ Social App", "xyzsocialapp@polattest.site");
-					//MailboxAddress mailboxAddressTo = new(user.FirstName, "***REMOVED***");
-     //               mimeMessage.From.Add(mailboxAddressFrom);
-     //               mimeMessage.To.Add(mailboxAddressTo);
-     //               BodyBuilder bodyBuilder = new();
-					//bodyBuilder.TextBody = $"Parolanızı sıfırlamak için linke tıklayın: <br />  {passwordResetTokenLink}";
-					//mimeMessage.Body = bodyBuilder.ToMessageBody();
-					//mimeMessage.Subject = "Parola Sıfırlama Talebi";
-
-     //               SmtpClient client = new();
-     //               client.Connect("mail.polattest.site", 587, false);
-					
-					//client.Authenticate("xyzsocialapp@polattest.site", "***REMOVED***");
-					//client.Send(mimeMessage);
-     //               client.Disconnect(true);
 
                     ViewBag.State = true;
                 }
