@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Core.Entities;
 using DataAccess;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace Mvc.Controllers
 			_context = context;
 			_favoriteService = favoriteService;
 		}
-		public async Task<IActionResult> FavoriteAsync(int Id)
+        public async Task<IActionResult> FavoriteAsync(int Id)
         {
 
             var userName = User.Identity.Name;
@@ -42,7 +44,7 @@ namespace Mvc.Controllers
                 await _favoriteService.Favorite(newFav);
             }
 
-            return RedirectToAction("Index", "Posts");
+            return RedirectToAction("index", "posts");
         }
     }
 }

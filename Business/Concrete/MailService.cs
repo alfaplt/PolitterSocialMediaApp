@@ -18,18 +18,18 @@ namespace Business.Concrete
         public void SendMailForResetPassword(AppUser user, string passwordResetTokenLink)
 		{
 			MimeMessage mimeMessage = new();
-			MailboxAddress mailboxAddressFrom = new("XYZ Social App", "xyzsocialapp@polattest.site");
+			MailboxAddress mailboxAddressFrom = new("Politter", _configuration["Email:mailAdress"]);
 			mimeMessage.From.Add(mailboxAddressFrom);
-			MailboxAddress mailboxAddressTo = new(user.FirstName, "***REMOVED***");
+			MailboxAddress mailboxAddressTo = new(user.FirstName, user.Email);
 			mimeMessage.To.Add(mailboxAddressTo);
 			BodyBuilder bodyBuilder = new();
 			bodyBuilder.TextBody = $"Parolanızı sıfırlamak için linke tıklayın:  {passwordResetTokenLink}";
 			mimeMessage.Body = bodyBuilder.ToMessageBody();
 			mimeMessage.Subject = "Parola Sıfırlama Talebi";
 			SmtpClient client = new();
-			client.Connect("mail.polattest.site", 587, false);
+			client.Connect(_configuration["Email:mailClient"], 587, false);
 			// Password coming from user secrets
-            client.Authenticate("xyzsocialapp@polattest.site", _configuration["Passwords:mailPassword"]);
+            client.Authenticate(_configuration["Email:mailAdress"], _configuration["Email:mailPassword"]);
 			client.Send(mimeMessage);
 			client.Disconnect(true);
 		}

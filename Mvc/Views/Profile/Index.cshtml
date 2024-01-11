@@ -1,9 +1,5 @@
 ﻿@model AppUser
-@using Microsoft.Extensions.Configuration
-@inject IConfiguration Configuration
 
-
-<h1>@Configuration["ASPNETCORE_ENVIRONMENT"]</h1>
 
 @if(Model == null)
 {
@@ -11,6 +7,9 @@
 }
 else
 {
+
+    @await Html.PartialAsync("_CommentModal")
+
 
     <div class="banner mb-5" style="background-image: url('/img/backgrounds/bg.jpg');">
 	    <div class="banner-title d-flex flex-column justify-content-center align-items-center">
@@ -76,13 +75,13 @@ else
 
                                     <a asp-action="Favorite" asp-controller="Favorite" asp-route-id="@post.Id" style="margin-right:20px" type="button" class="btn btn-info rounded-circle btn-sm">
                                         <i class="bi-heart" style="color:black">
-                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@Model.Favorites.Where(x => x.PostId == post.Id).Count()</span>
                                         </i>
                                     </a>
 
                                     <a data-target="/Comments/_ListComments/@post.Id" data-toggle="modal" style="margin-right:20px" type="button" class="commentview btn btn-info btn-sm rounded-circle">
                                         <i class="bi-chat" style="color:black">
-                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4</span>
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@Model.Comments.Where(x => x.PostId == post.Id).Count()</span>
                                         </i>
                                     </a>
 
@@ -107,3 +106,5 @@ else
     </div>
 
 }
+
+
