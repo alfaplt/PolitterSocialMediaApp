@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<Post>
 
-
 @await Html.PartialAsync("_CommentModal")
 
 <div class="row">
@@ -39,9 +38,17 @@
                                     @post.Content
                                 </p>
                             </div>
+
+                            @if(post.AppUser.UserName != User.Identity.Name)
+                            {
+                                <a asp-controller="Follow" asp-action="FollowUnFollow" asp-route-Id="@post.AppUser.Id" class="btn btn-sm btn-info mr-4">@ViewData[post.Id.ToString()+ "x"]</a>
+                            }
+                            
                             <small>@ViewData[post.Id.ToString()]</small>
                         </div>
+
                         <div @*buttons*@ >
+
                             <div class="btn-group text-sm-center float-right" role="group" aria-label="Basic example" style="margin-top:20px">
 
                                 <a asp-action="Favorite" asp-controller="Favorite" asp-route-id="@post.Id" style="margin-right:20px" type="button" class="btn btn-info rounded-circle btn-sm">

@@ -19,31 +19,35 @@ namespace Mvc.Controllers
 			_context = context;
 			_favoriteService = favoriteService;
 		}
-        public async Task<IActionResult> FavoriteAsync(int Id)
+        public async Task<IActionResult> Favorite(int Id)
         {
 
             var userName = User.Identity.Name;
             AppUser user = _context.Users.Where(x => x.UserName == userName).FirstOrDefault();
+            Post postToFav = _context.Posts.Where(x => x.Id == Id).FirstOrDefault();
 
             var favs = _context.Favorites.Include(x => x.User).Include(x => x.Post).ToList();
 
             var fav = _context.Favorites.FirstOrDefault(x => x.AppUserId == user.Id && x.PostId == Id);
 
-            if (favs.Contains(fav))
+            if(postToFav != null)
             {
-                await _favoriteService.Unfavorite(fav);
-            }
-            else
-            {
-                Favorite newFav = new Favorite()
+                if (favs.Contains(fav))
                 {
-                    AppUserId = user.Id,
-                    PostId = Id
-                };
+                    await _favoriteService.Unfavorite(fav);
+                }
+                else
+                {
+                    Favorite newFav = new Favorite()
+                    {
+                        AppUserId = user.Id,
+                        PostId = Id
+                    };
 
-                await _favoriteService.Favorite(newFav);
+                    await _favoriteService.Favorite(newFav);
+                }
             }
-
+            
             return RedirectToAction("index", "posts");
         }
     }

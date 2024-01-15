@@ -9,9 +9,9 @@
                 <h5 class="card-title">@($"{@Model.FirstName} {@Model.LastName}")</h5>
                 <p class="card-text text-justify mb-2 text-center">Merhaba</p>
                 <ul class="list-unstyled nav justify-content-center">
-                    <li class="nav-item">Takipçi--<br> <strong>12M</strong></li></a> 
+                    <li class="nav-item">Takipçi--<br> <strong>@Model.Followeds.Count</strong></li></a> 
                     <br />
-                    <li class="nav-item">-Takip<br> <strong>1</strong></li></a>
+                    <li class="nav-item">-Takip Edilen<br> <strong>@Model.Followings.Count</strong></li></a>
                 </ul>
             </div>
         </div>

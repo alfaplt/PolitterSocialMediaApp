@@ -20,9 +20,9 @@ namespace Business.Concrete
 			await _unitOfWork.CommitAsync();
 		}
 
-		public async Task Unfavorite(Favorite favorite)
+		public async Task Unfavorite(Favorite unFavorite)
 		{
-			_unitOfWork.Favorites.Remove(favorite);
+			_unitOfWork.Favorites.Remove(unFavorite);
 			await _unitOfWork.CommitAsync();
 		}
 	}

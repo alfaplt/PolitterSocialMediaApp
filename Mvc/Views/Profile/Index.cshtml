@@ -1,6 +1,5 @@
 ﻿@model AppUser
 
-
 @if(Model == null)
 {
 	<h2>Kullanıcı bulunamadı!</h2>
@@ -14,7 +13,17 @@ else
     <div class="banner mb-5" style="background-image: url('/img/backgrounds/bg.jpg');">
 	    <div class="banner-title d-flex flex-column justify-content-center align-items-center">
 		    <img src=@Model.ProfilePicture alt="img" class="rounded-circle" width="200" height="200">
-		    <h2 class=" text-light border border-light">Merhaba @Model.FirstName</h2>
+
+            @if (User.Identity.Name == @Model.UserName)
+            {
+                <h2 class=" text-light border border-light">Merhaba @Model.FirstName</h2>
+            }
+            else
+            {
+                <h2 class=" text-light border border-light">@Model.FirstName @Model.LastName</h2>
+                <a onclick="show()" asp-controller="Follow" asp-action="FollowUnFollow" asp-route-Id="@Model.Id" class="btn btn-sm btn-info mr-4">@ViewData["followLink"]</a>
+            }
+
 	    </div>
     </div>
 
@@ -106,5 +115,11 @@ else
     </div>
 
 }
+
+<script>
+    function show() {
+        alert("İşlem başarılı! Anasayfaya yönlendiriliyorsunuz.");
+    }
+</script>
 
 

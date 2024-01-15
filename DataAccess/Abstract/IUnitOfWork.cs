@@ -12,6 +12,7 @@ namespace DataAccess.Abstract
 		IUserRepository Users { get; }
 		ICommentRepository Comments { get; }
 		IFavoriteRepository Favorites { get; }
+		IFollowRepository Follows { get; }
 		Task<int> CommitAsync();
 	}
 }

@@ -4,6 +4,7 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240114100118_updateFollowsTableColumnName")]
+    partial class updateFollowsTableColumnName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,12 +183,12 @@ namespace DataAccess.Migrations
                     b.Property<int>("FollowingId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FollowedId")
+                    b.Property<int>("FollowerId")
                         .HasColumnType("int");
 
-                    b.HasKey("FollowingId", "FollowedId");
+                    b.HasKey("FollowingId", "FollowerId");
 
-                    b.HasIndex("FollowedId");
+                    b.HasIndex("FollowerId");
 
                     b.ToTable("Follows");
                 });
@@ -358,9 +360,9 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Core.Entities.Follow", b =>
                 {
-                    b.HasOne("Core.Entities.AppUser", "Followed")
-                        .WithMany("Followeds")
-                        .HasForeignKey("FollowedId")
+                    b.HasOne("Core.Entities.AppUser", "Follower")
+                        .WithMany("Followers")
+                        .HasForeignKey("FollowerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -370,7 +372,7 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Followed");
+                    b.Navigation("Follower");
 
                     b.Navigation("Following");
                 });
@@ -443,7 +445,7 @@ namespace DataAccess.Migrations
 
                     b.Navigation("Favorites");
 
-                    b.Navigation("Followeds");
+                    b.Navigation("Followers");
 
                     b.Navigation("Followings");
 

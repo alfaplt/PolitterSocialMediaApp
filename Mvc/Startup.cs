@@ -56,6 +56,7 @@ namespace Mvc
             services.AddScoped<IMapper, Mapper>();
             services.AddTransient<IFavoriteService, FavoriteService>();
             services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IFollowService, FollowService>();
             #endregion
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("connectionString")));

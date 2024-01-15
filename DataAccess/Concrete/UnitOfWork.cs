@@ -10,6 +10,7 @@ namespace DataAccess.Concrete
         private UserRepository _userRepository;
         private CommentRepository _commentRepository;
 		private FavoriteRepository _favoriteRepository;
+        private FollowRepository _followRepository;
 
 		public UnitOfWork(AppDbContext context)
         {
@@ -19,8 +20,8 @@ namespace DataAccess.Concrete
         public IUserRepository Users => _userRepository = _userRepository ?? new UserRepository(_context);
         public ICommentRepository Comments => _commentRepository = _commentRepository ?? new CommentRepository(_context);
 		public IFavoriteRepository Favorites => _favoriteRepository = _favoriteRepository ?? new FavoriteRepository(_context);
-
-		public async Task<int> CommitAsync()
+        public IFollowRepository Follows => _followRepository = _followRepository ?? new FollowRepository(_context);
+        public async Task<int> CommitAsync()
         {
             return await _context.SaveChangesAsync();
         }

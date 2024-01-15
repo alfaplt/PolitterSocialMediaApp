@@ -1,13 +1,9 @@
 ﻿using Business.Abstract;
-using Business.Concrete;
 using Core.Entities;
 using DataAccess;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Schema;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,19 +14,24 @@ namespace Mvc.Controllers
     {
         private readonly IPostService _postService;
         private readonly UserManager<AppUser> _userManager;
-        public PostsController(IPostService postService, UserManager<AppUser> userManager)
+        private readonly AppDbContext _context;
+        public PostsController(IPostService postService, UserManager<AppUser> userManager, AppDbContext context)
         {
             _postService = postService;
             _userManager = userManager;
+            _context = context;
         }
-
-        // business'a taşı
 
         public async Task<IActionResult> Index()
         {
             var posts = await _postService.GetAllWithUserAndComments();
+            string authUserName = User.Identity.Name;
+            int authUserId = (await _userManager.FindByNameAsync(authUserName)).Id;
+         
+            AppUser user = _context.Users.Include(x => x.Followeds).Where(x => x.Id == authUserId).FirstOrDefault();
+            var follows = _context.Follows.Include(x => x.Following).Include(x => x.Followed).ToList();
 
-            //For follow suggestions
+            #region For follow suggestions
             //sisteme giriş yapan kullanıcıyı da gösteriyor. fix it.
             var users = _userManager.Users.ToList();
             Random randomnbr = new();
@@ -48,8 +49,24 @@ namespace Mvc.Controllers
             ViewBag.usrPp2 = users[nbr2].ProfilePicture;
             ViewBag.usrPp3 = users[nbr3].ProfilePicture;
 
+            #endregion
+
+
             foreach (var post in posts)
             {
+                var follow = _context.Follows.FirstOrDefault(x => x.FollowingId == user.Id && x.FollowedId == post.AppUserId);
+
+                // Unique bir ViewData key'i için böyle bir yol denendi.
+                if (follows.Contains(follow))
+                {
+                    ViewData[post.Id.ToString()+ "x"] = "Takibi Bırak";
+                }
+                else
+                {
+                    ViewData[post.Id.ToString() + "x"] = "Takip Et";
+                }
+
+                #region TimeSpan for post created time
                 TimeSpan date = DateTime.Now.Subtract(post.CreatedDate);
 
                 if (date.TotalSeconds < 60)
@@ -68,6 +85,7 @@ namespace Mvc.Controllers
                 {
                     ViewData[post.Id.ToString()] = $"{date.Days.ToString()} gün önce";
                 }
+                #endregion
             }
 
             return View(posts);

@@ -18,5 +18,7 @@ namespace Core.Entities
 		public List<Post> Posts { get; set; }
 		public List<Comment> Comments { get; set; }
 		public List<Favorite> Favorites { get; set; }
+		public List<Follow> Followings { get; set; }
+		public List<Follow> Followeds { get; set; }
 	}
 }

@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-	public interface IFavoriteService
-	{
-		//void Favorite(Favorite favorite);
-		Task Favorite(Favorite favorite);
-		Task Unfavorite(Favorite unFavorite);
-	}
+    public interface IFollowService
+    {
+        Task Follow(Follow follow);
+        Task UnFollow(Follow unfollow);
+    }
 }
