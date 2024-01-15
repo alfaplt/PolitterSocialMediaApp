@@ -16,7 +16,7 @@ else
 
             @if (User.Identity.Name == @Model.UserName)
             {
-                <h2 class="text-center mb-5 text-light border border-light">Merhaba @Model.FirstName</h2>
+                <h2 class="mb-5 text-light border border-light">Merhaba @Model.FirstName</h2>
                 <a asp-controller="Account" asp-action="EditProfile" class="ml-3 btn btn-info">Profili Güncelle</a>
             }
             else
