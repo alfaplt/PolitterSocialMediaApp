@@ -16,12 +16,13 @@ else
 
             @if (User.Identity.Name == @Model.UserName)
             {
-                <h2 class=" text-light border border-light">Merhaba @Model.FirstName</h2>
+                <h2 class="text-center mb-5 text-light border border-light">Merhaba @Model.FirstName</h2>
+                <a asp-controller="Account" asp-action="EditProfile" class="ml-3 btn btn-info">Profili Güncelle</a>
             }
             else
             {
-                <h2 class=" text-light border border-light">@Model.FirstName @Model.LastName</h2>
-                <a onclick="show()" asp-controller="Follow" asp-action="FollowUnFollow" asp-route-Id="@Model.Id" class="btn btn-sm btn-info mr-4">@ViewData["followLink"]</a>
+                <h2 class="mb-5 text-light border border-light">@Model.FirstName @Model.LastName</h2>
+                <a onclick="show()" asp-controller="Follow" asp-action="FollowUnFollow" asp-route-Id="@Model.Id" class="btn btn-info mr-4">@ViewData["followLink"]</a>
             }
 
 	    </div>
@@ -33,30 +34,33 @@ else
             <table class="table table-bordered table-hover ">
 
                 <tr>
-                    <th>Ad: </th>
+                    <th>Ad:</th>
                     <td class="ml-5">@Model.FirstName</td>
       
                 </tr>
                 <tr>
-                    <th>Soyad</th>
+                    <th>Soyad:</th>
                     <td>@Model.LastName</td>
        
                 </tr>
                 <tr>
-                    <th>Kullanıcı Adı</th>
+                    <th>Kullanıcı Adı:</th>
                     <td>@Model.UserName</td>
     
                 </tr>
-                <tr>
-                    <th>Email</th>
-                    <td>@Model.Email</td>
- 
-                </tr>
-                <tr>
-                    <th>Telefon</th>
+                @if (@Model.UserName == User.Identity.Name)
+                {
+                    <tr>
+                        <th>Email:</th>
+                        <td>@Model.Email</td>
+
+                    </tr>
+                    <tr>
+                        <th>Telefon:</th>
                     <td>@Model.PhoneNumber</td>
 
                 </tr>
+                }
 
             </table>
             <div class="middle-column">
@@ -103,8 +107,10 @@ else
                                     <a style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-send"></i></a>
                                 </div>
 
+                                @if (post.AppUser.UserName == User.Identity.Name) {
                                     <a asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id" class="btn btn-danger btn-sm rounded-circle float-left " style="margin-top:20px"><i class="bi-trash"></i></a>
-                     
+                                }
+
                             </div>
                         </div>
                     </div>
