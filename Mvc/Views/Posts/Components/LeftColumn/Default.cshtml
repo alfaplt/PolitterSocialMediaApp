@@ -18,6 +18,7 @@
         <div class="card shadow-sm card-left2 mb-4">
             <div class="card-body">
                 <h5 class="mb-3 card-title">Hakkında<a asp-controller="Account" asp-action="EditProfile" class="ml-3 btn btn-info">Profili Güncelle</a></h5>
+                <p class="card-text"> <i class="fas fa-user mr-2"></i>@Model.About</p>
                 <p class="card-text"> <i class="fas fa-user mr-2"></i>@($"@{Model.UserName}")</p>
                 <p class="card-text"> <i class="fas fa-phone mr-2"></i>@Model.PhoneNumber</p>
                 <p class="card-text"> <i class="fas fa-envelope mr-2"></i>@Model.Email</p>

@@ -16,5 +16,6 @@ namespace Core.DTOs
         public string PhoneNumber { get; set; }
         public IFormFile UploadProfilePicture { get; set; }
         public string ProfilePicture { get; set; }
+        public string About { get; set; }
     }
 }

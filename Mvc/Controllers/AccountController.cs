@@ -3,21 +3,18 @@ using Business.Abstract;
 using Business.Concrete;
 using Core.DTOs;
 using Core.Entities;
-using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MimeKit;
 using System;
 using System.IO;
 using System.Linq;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace Mvc.Controllers
 {
-	public class AccountController : Controller
+    public class AccountController : Controller
 	{
 		private readonly SignInManager<AppUser> _signInManager;
 		private readonly UserManager<AppUser> _userManager;
@@ -49,6 +46,7 @@ namespace Mvc.Controllers
 				AppUser appUser = new();
 				appUser = _mapper.Map<AppUser>(appUserRegisterDto);
 				appUser.RegisterDate = DateTime.Now;
+                appUser.About = "Merhaba ben Politter kullanıyorum.";
 
                 UploadPhotoService photoService = new();
                 var newPicture = photoService.UploadProfilePicture(appUserRegisterDto.ProfilePicture);
@@ -157,6 +155,7 @@ namespace Mvc.Controllers
                 user.Email = userDto.Email;
                 user.PhoneNumber = userDto.PhoneNumber;
                 user.UserName = userDto.UserName;
+                user.About = userDto.About;
 
                 UploadPhotoService photoService = new();
                 var newPicture = photoService.UploadProfilePicture(userDto.UploadProfilePicture);
