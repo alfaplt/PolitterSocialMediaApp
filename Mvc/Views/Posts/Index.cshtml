@@ -1,7 +1,6 @@
 ﻿@*@model IEnumerable<Post>*@
 @model PagedList.Core.IPagedList<Post>
 @addTagHelper *,PagedList.Core.Mvc
-@using PagedList.Core
 
 @await Html.PartialAsync("_CommentModal")
 
@@ -33,8 +32,8 @@
                             <img src=@post.AppUser.ProfilePicture alt="img" width="55" height="55" class="rounded-circle mr-3">
                             <div class="media-body">
                                 <div>
-                                <h5>@post.AppUser.FirstName @post.AppUser.LastName</h5>
-                                <h6 class="small">@($"@{post.AppUser.UserName}")</h6>
+                                    <a asp-controller="Profile" asp-action="@post.AppUser.UserName" class="link">@post.AppUser.FirstName @post.AppUser.LastName</a>
+                                    <h6 class="small">@($"@{post.AppUser.UserName}")</h6>
                                 </div>                                   
                                 <hr>
                                 <p class="text-justify">
@@ -83,7 +82,7 @@
                 </div>
                 <br />
             }
-            <pager  list="@Model" asp-action="index" asp-controller="posts"></pager>
+            <pager list="@Model" asp-action="index" asp-controller="posts"></pager>
         </div>
     </div>
 

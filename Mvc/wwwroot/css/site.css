@@ -93,3 +93,9 @@ body {
     background-size: cover;
     background-color: #3097D1;
 }
+
+.link {
+    text-decoration: auto;
+    color: black;
+    font-size: larger;
+}
