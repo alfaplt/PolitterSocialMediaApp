@@ -4,6 +4,7 @@ using DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Business.Concrete
 {
@@ -50,6 +51,10 @@ namespace Business.Concrete
         public async Task<IEnumerable<Post>> GetAllWithUserAndComments()
         {
             return await _unitOfWork.Posts.GetAllWithUserAndCommentsAsync();
+        }
+        public IQueryable<Post> GetAllWithUserAndCommentsForPagedList()
+        {
+            return  _unitOfWork.Posts.GetAllWithUserAndCommentsForPagedList();
         }
 
     }

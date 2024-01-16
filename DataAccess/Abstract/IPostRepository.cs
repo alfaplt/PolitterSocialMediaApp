@@ -13,5 +13,6 @@ namespace DataAccess.Abstract
         Task<Post> GetWithUserByIdAsync(int id);
         Task<IEnumerable<Post>> GetAllWithUserByUserIdAsync(int userId);
         Task<IEnumerable<Post>> GetAllWithUserAndCommentsAsync();
+        IQueryable<Post> GetAllWithUserAndCommentsForPagedList();
     }
 }

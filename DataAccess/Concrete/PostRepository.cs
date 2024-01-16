@@ -1,10 +1,8 @@
 ﻿using Core.Entities;
 using DataAccess.Abstract;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Concrete
@@ -31,5 +29,10 @@ namespace DataAccess.Concrete
         {
             return await _context.Posts.Include(x => x.AppUser).Include(x => x.Comments).Include(x => x.Favorites).OrderByDescending(x => x.CreatedDate).ToListAsync();
         }
+        public IQueryable<Post> GetAllWithUserAndCommentsForPagedList()
+        {
+            return _context.Posts.Include(x => x.AppUser).Include(x => x.Comments).Include(x => x.Favorites).OrderByDescending(x => x.CreatedDate);
+        }
+
     }
 }

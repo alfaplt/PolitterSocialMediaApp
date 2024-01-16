@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using PagedList.Core;
 
 namespace Mvc.Controllers
 {
@@ -22,9 +23,10 @@ namespace Mvc.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 10)
         {
-            var posts = await _postService.GetAllWithUserAndComments();
+            //var posts = await _postService.GetAllWithUserAndComments();
+            var posts = _postService.GetAllWithUserAndCommentsForPagedList().ToPagedList(page, pageSize);
             string authUserName = User.Identity.Name;
             int authUserId = (await _userManager.FindByNameAsync(authUserName)).Id;
          

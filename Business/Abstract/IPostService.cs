@@ -16,5 +16,6 @@ namespace Business.Abstract
         Task UpdatePost(Post postToBeUpdated, Post post);
         Task DeletePost(Post post);
         Task<IEnumerable<Post>> GetAllWithUserAndComments();
+        IQueryable<Post> GetAllWithUserAndCommentsForPagedList();
     }
 }

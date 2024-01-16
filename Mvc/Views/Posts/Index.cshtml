@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Post>
+﻿@*@model IEnumerable<Post>*@
+@model PagedList.Core.IPagedList<Post>
+@addTagHelper *,PagedList.Core.Mvc
+@using PagedList.Core
 
 @await Html.PartialAsync("_CommentModal")
 
@@ -80,6 +83,7 @@
                 </div>
                 <br />
             }
+            <pager  list="@Model" asp-action="index" asp-controller="posts"></pager>
         </div>
     </div>
 
