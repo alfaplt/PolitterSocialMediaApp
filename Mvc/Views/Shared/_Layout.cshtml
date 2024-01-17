@@ -55,7 +55,7 @@
                 {
                     @*href="/Account/Profile/@User.Identity.Name"*@
                     <li class="nav-item mr-2"><a class="nav-link active" asp-controller="Profile" asp-action="Index" asp-route-userName ="@User.Identity.Name" >Profilim</a></li>
-                    <li class="nav-item mr-2"><a class="nav-link active" href="#modalview" data-toggle="modal">Mesajlar</a></li>
+                    @*<li class="nav-item mr-2"><a class="nav-link active" href="#modalview" data-toggle="modal">Mesajlar</a></li>*@
                     <li class="nav-item"><a asp-action="LogOut" asp-controller="Account" class="nav-link active">Çıkış Yap</a></li>
                     @*<li class="nav-item"><a class="nav-link active" href="#"><img src="~/img/avatar-dhg.png" alt="" class="rounded-circle ml-3 d-none d-md-block" width="40px" height="40px"></a></li>*@
                 }

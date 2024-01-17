@@ -4,10 +4,11 @@ using DataAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PagedList.Core;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PagedList.Core;
 
 namespace Mvc.Controllers
 {
@@ -33,19 +34,53 @@ namespace Mvc.Controllers
             AppUser user = _context.Users.Include(x => x.Followeds).Where(x => x.Id == authUserId).FirstOrDefault();
             var follows = _context.Follows.Include(x => x.Following).Include(x => x.Followed).ToList();
 
-            #region For follow suggestions
-            //sisteme giriş yapan kullanıcıyı da gösteriyor. fix it.
+            #region For follow suggestions 
+            // Code review needed for this section
+
             var users = _userManager.Users.ToList();
             Random randomnbr = new();
             var x = users.Count;
+
+            int authUserIndex = users.IndexOf(user);
+
+            List<int> values = new List<int>();
+
             int nbr1 = randomnbr.Next(x);
+       
             int nbr2 = randomnbr.Next(x);
+
+            while (nbr1 == authUserIndex)
+            {
+                nbr1 = randomnbr.Next(x);
+            }
+            values.Add(nbr1);
+
+            while (nbr1 == nbr2 || nbr2 == authUserIndex)
+            {
+                nbr2 = randomnbr.Next(x);
+            }
+            values.Add(nbr2);
+
             int nbr3 = randomnbr.Next(x);
 
-            
-            ViewBag.randomUser1 = users[nbr1].FirstName;
-            ViewBag.randomUser2 = users[nbr2].FirstName;
-            ViewBag.randomUser3 = users[nbr3].FirstName;
+            while (nbr3 == nbr2 || nbr3 == nbr1 || nbr3 == authUserIndex)
+            {
+                nbr3 = randomnbr.Next(x);
+            }
+            values.Add(nbr3);
+
+
+            ViewBag.randomUser1 = $"{users[nbr1].FirstName} {users[nbr1].LastName}";
+            ViewBag.randomUser2 = $"{users[nbr2].FirstName} {users[nbr2].LastName}";
+            ViewBag.randomUser3 = $"{users[nbr3].FirstName} {users[nbr3].LastName}";
+
+            ViewBag.userName1 = users[nbr1].UserName;
+            ViewBag.userName2 = users[nbr2].UserName;
+            ViewBag.userName3 = users[nbr3].UserName;
+
+            ViewBag.userId1 = users[nbr1].Id;
+            ViewBag.userId2 = users[nbr2].Id;
+            ViewBag.userId3 = users[nbr3].Id;
 
             ViewBag.usrPp1 = users[nbr1].ProfilePicture;
             ViewBag.usrPp2 = users[nbr2].ProfilePicture;

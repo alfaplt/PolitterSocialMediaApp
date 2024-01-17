@@ -10,7 +10,7 @@
                     <img src="/img/otherimages/thyReklam.jpg" alt="card-img" class="card-img mb-3">
                     <p class="card-text text-justify"> <span class="h6">Türk Hava Yolları ile uçmak ister misin?</span></p>
                     <audio controls><source src="/audio/thy.mp3" type="audio/mpeg"></audio>
-                    <a href="https://www.turkishairlines.com/tr-int/ucak-bileti/rezervasyon/" target="_blank" class="btn btn-outline-info card-link btn-sm">Bilet Al</a>
+                    <a href="https://www.turkishairlines.com/tr-int/ucak-bileti/rezervasyon/" target="_blank" class="btn btn-outline-info card-link btn-sm">Bilet Satın Al</a>
                 </div>
             </div>
             <div class="card shadow-sm mb-4">
@@ -30,29 +30,29 @@
                     <table class="table ">
                         <tr>
                             <td>
-                                <h6 class="ml-4">@ViewBag.randomUser1</h6>
+                                <a class="link" asp-action="@ViewBag.userName1" asp-controller="Profile"><h6 class="ml-4">@ViewBag.randomUser1</h6></a>
                                 <img src=@ViewBag.usrPp1 alt="img" width="50" height="50" class="rounded-circle mb-1 ml-4" />
                             </td>
                             <td>
-                                <a href="#" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et </a>
+                                <a asp-action="FollowUnFollow" asp-controller="Follow" asp-route-Id="@ViewBag.userId1" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et</a>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <h6 class="ml-4">@ViewBag.randomUser2</h6>
+                                <a class="link" asp-action="@ViewBag.userName2" asp-controller="Profile"><h6 class="ml-4">@ViewBag.randomUser2</h6></a>
                                 <img src=@ViewBag.usrPp2 alt="img" width="50" height="50" class="rounded-circle mb-1 ml-4">
                             </td>
                             <td>
-                                <a href="#" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et </a>
+                                <a asp-action="FollowUnFollow" asp-controller="Follow" asp-route-Id="@ViewBag.userId2" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et </a>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <h6 class="ml-4">@ViewBag.randomUser3</h6>
+                                <a class="link" asp-action="@ViewBag.userName3" asp-controller="Profile"><h6 class="ml-4">@ViewBag.randomUser3</h6></a>
                                 <img src=@ViewBag.usrPp3 alt="img" width="50" height="50" class="rounded-circle mb-1 ml-4">
                             </td>
                             <td>
-                                <a href="#" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et </a>
+                                <a asp-action="FollowUnFollow" asp-controller="Follow" asp-route-Id="@ViewBag.userId3" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et </a>
                             </td>
                         </tr>
                     </table>

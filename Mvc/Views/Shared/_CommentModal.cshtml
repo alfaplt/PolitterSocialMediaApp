@@ -6,13 +6,13 @@
             $.post(url, function (data) { })
 
                 .done(function (data) {
-                    $("#modelView .modal-body").html(data);
-                    $("#modelView").modal("show");
+                    $("#modelViewForComments .modal-body").html(data);
+                    $("#modelViewForComments").modal("show");
                 })
 
                 .fail(function () {
-                    $("#modelView .modal-body").text("Opps!!");
-                    $("#modelView").modal("show");
+                    $("#modelViewForComments .modal-body").text("Opps!!");
+                    $("#modelViewForComments").modal("show");
                 })
 
         });
@@ -20,7 +20,7 @@
 
 </script>
 
-<div class="modal fade" id="modelView">
+<div class="modal fade" id="modelViewForComments">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
