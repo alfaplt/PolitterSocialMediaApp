@@ -28,13 +28,14 @@ namespace Mvc.Controllers
         [Route("{userName}")]
         public async Task<IActionResult> IndexAsync(string userName)
         {
-            AppUser user = _userManager.Users
-                .Include(x => x.Posts)
-                .Include(x => x.Favorites)
-                .Include(x => x.Comments)
-                .Include(x => x.Followeds)
-                .Where(x => x.UserName == userName)
-                .FirstOrDefault();
+			AppUser user = _userManager.Users
+				.Where(x => x.UserName == userName)
+				.Include(x => x.Posts)
+				.Include(x => x.Favorites)
+				.Include(x => x.Comments)
+				.Include(x => x.Followeds)
+				.Include(x => x.Followings)
+				.FirstOrDefault();
 
             var follows = _context.Follows.Include(x => x.Following).Include(x => x.Followed).ToList();
 

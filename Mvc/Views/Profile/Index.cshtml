@@ -8,7 +8,7 @@ else
 {
 
     @await Html.PartialAsync("_CommentModal")
-
+    @await Html.PartialAsync("_FollowsModal")
 
     <div class="banner mb-5" style="background-image: url('/img/backgrounds/bg.jpg');">
 	    <div class="banner-title d-flex flex-column justify-content-center align-items-center">
@@ -28,6 +28,13 @@ else
 	    </div>
     </div>
 
+    <ul class="list-unstyled nav justify-content-center mb-5">
+
+        <li class="nav-item text-center"><a class="link followers" data-toogle="modal" data-target="/Follow/_ListFollowers/@Model.Id">Takipçi</a>---<br> <strong>@Model.Followeds.Count</strong></li>
+
+        <li class="nav-item text-center"><a class="link followings" data-toogle="modal" data-target="/Follow/_ListFollowings/@Model.Id">Takip Edilen</a><br> <strong>@Model.Followings.Count</strong></li>
+        
+    </ul>
 
     <div class="row">
         <div class="col-md-6 offset-md-3 ">
@@ -59,7 +66,12 @@ else
                         <th>Telefon:</th>
                     <td>@Model.PhoneNumber</td>
 
-                </tr>
+                    </tr>
+                    <tr>
+                        <th>Hakkında:</th>
+                        <td>@Model.About</td>
+
+                    </tr>
                 }
 
             </table>
@@ -91,6 +103,7 @@ else
                                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@Model.Favorites.Where(x => x.PostId == post.Id).Count()</span>
                                         </i>
                                     </a>
+
 
                                     <a data-target="/Comments/_ListComments/@post.Id" data-toggle="modal" style="margin-right:20px" type="button" class="commentview btn btn-info btn-sm rounded-circle">
                                         <i class="bi-chat" style="color:black">

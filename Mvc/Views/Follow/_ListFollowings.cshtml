@@ -1,0 +1,17 @@
+﻿@model List<Follow>
+
+<ul class="list-unstyled">
+    @foreach (var following in Model)
+    {
+        <li class="media hover-media ">
+
+            <img src=@following.Followed.ProfilePicture alt="img" width="40" height="40" class="rounded-circle mr-3">
+            <div class="media-body text-dark">
+                <a asp-action="@following.Followed.UserName" asp-controller="Profile"><h6 class="media-header link">@($"{following.Followed.FirstName} {following.Followed.LastName}")</h6></a>
+                <p class="media-text">@($"@{following.Followed.UserName}")</p>
+            </div>
+
+        </li>
+        <hr class="my-3">
+    }
+</ul>

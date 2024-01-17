@@ -98,4 +98,9 @@ body {
     text-decoration: auto;
     color: black;
     font-size: larger;
+    
+}
+
+.link:hover {
+    cursor:pointer;
 }

@@ -1,5 +1,7 @@
 ﻿@model AppUser
 
+@await Html.PartialAsync("_FollowsModal")
+
 <div class="col-md-3 ">
     <div class="left-column">
         <div class="card card-left1 mb-4">
@@ -9,9 +11,11 @@
                 <h5 class="card-title">@($"{@Model.FirstName} {@Model.LastName}")</h5>
                 <p class="card-text text-justify mb-2 text-center">Merhaba</p>
                 <ul class="list-unstyled nav justify-content-center">
-                    <li class="nav-item">Takipçi--<br> <strong>@Model.Followeds.Count</strong></li></a> 
+                  @*  <li class="nav-item">Takipçi--<br> <strong>@Model.Followeds.Count</strong></li> 
                     <br />
-                    <li class="nav-item">-Takip Edilen<br> <strong>@Model.Followings.Count</strong></li></a>
+                    <li class="nav-item">-Takip Edilen<br> <strong>@Model.Followings.Count</strong></li>*@
+                    <li class="nav-item text-center"><a class="link followers" data-toogle="modal" data-target="/Follow/_ListFollowers/@Model.Id">Takipçi</a>---<br> <strong>@Model.Followeds.Count</strong></li>
+                    <li class="nav-item text-center"><a class="link followings" data-toogle="modal" data-target="/Follow/_ListFollowings/@Model.Id">Takip Edilen</a><br> <strong>@Model.Followings.Count</strong></li>
                 </ul>
             </div>
         </div>
