@@ -1,17 +1,19 @@
 ﻿@model List<Follow>
 
-<ul class="list-unstyled">
-    @foreach (var follower in Model)
-    {
-        <li class="media hover-media ">
 
-            <img src=@follower.Following.ProfilePicture alt="img" width="40" height="40" class="rounded-circle mr-3">
-            <div class="media-body text-dark">
-                <a asp-action="@follower.Following.UserName" asp-controller="Profile"><h6 class="media-header link">@($"{follower.Following.FirstName} {follower.Following.LastName}")</h6></a>
-                <p class="media-text">@($"@{follower.Following.UserName}")</p>
-            </div>
-
-        </li>
-        <hr class="my-3">
-    }
-</ul>
+<div id="plist" class="mt-2 people-list">
+    <ul class="list-unstyled chat-list mt-2 mb-0">
+        @foreach (var user in Model)
+        {
+            <a asp-action="Index" asp-controller="Profile" asp-route-userName="@user.Following.UserName">
+            <li class="clearfix">
+                <img src=@user.Following.ProfilePicture alt="avatar">
+                <div class="about">
+                    <div class="name">@user.Following.FirstName @user.Following.LastName</div>
+                    <div class="status"> <i class="fa fa-circle online"></i> @user.Following.UserName </div>
+                </div>
+            </li>
+            </a>
+        }
+    </ul>
+</div>
