@@ -87,7 +87,7 @@ namespace Mvc.Controllers
             ViewBag.usrPp3 = users[nbr3].ProfilePicture;
 
             #endregion
-
+            var usersForFollowSuggestions = _userManager.Users.Where(x => x.UserName != User.Identity.Name).ToList();
 
             foreach (var post in posts)
             {

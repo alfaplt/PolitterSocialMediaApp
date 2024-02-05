@@ -1,6 +1,5 @@
 ﻿@*@model List<Post>*@
 
-
 <div class="col-md-3">
         <div class="right-column">
             <!--Ads-->
@@ -27,14 +26,64 @@
                 <div clss="row">
                 <div class="card-body ">
                     <h6 class="card-title text-center">Belki takip etmek istersin ;)</h6><hr />
-                    <table class="table ">
+
+                    <div id="plist" class="mt-2 people-list">
+                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                            <a asp-action="Index" asp-controller="Profile" asp-route-userName="@ViewBag.userName1">
+                                <li class="clearfix">
+                                    <div class="containeritem">
+                                    <img src=@ViewBag.usrPp1 alt="avatar">
+                                        <div class="about">
+                                        <div class="name">@ViewBag.randomUser1</div>
+                                        <div class="status"> <i class="fa fa-circle online"></i>@ViewBag.userName1 </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </a>
+                        </ul>
+                    </div>
+                    <div id="plist" class="mt-2 people-list">
+                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                            <a asp-action="Index" asp-controller="Profile" asp-route-userName="@ViewBag.userName2">
+                            <li class="clearfix">
+                                <div class="containeritem">
+                                    <img src=@ViewBag.usrPp2 alt="avatar">
+                                    <div class="about">
+                                        <div class="name">@ViewBag.randomUser2</div>
+                                        <div class="status"> <i class="fa fa-circle online"></i>@ViewBag.userName2 </div>
+                                    </div>
+                                </div>
+                            </li>
+                            </a>
+                        </ul>
+                    </div>
+                    <div id="plist" class="mt-2 people-list">
+                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                            <a asp-action="Index" asp-controller="Profile" asp-route-userName="@ViewBag.userName3">
+                            <li class="clearfix">
+                                <div class="containeritem">
+                                    <img src=@ViewBag.usrPp3 alt="avatar">
+                                    <div class="about">
+                                        <div class="name">@ViewBag.randomUser3</div>
+                                        <div class="status"> <i class="fa fa-circle online"></i>@ViewBag.userName3 </div>
+                                    </div>
+                                </div>
+                            </li>
+                            </a>
+                        </ul>
+                    </div>
+
+
+
+
+                   @* <table class="table ">
                         <tr>
                             <td>
                                 <a class="link" asp-action="@ViewBag.userName1" asp-controller="Profile"><h6 class="ml-4">@ViewBag.randomUser1</h6></a>
                                 <img src=@ViewBag.usrPp1 alt="img" width="50" height="50" class="rounded-circle mb-1 ml-4" />
                             </td>
                             <td>
-                                <a asp-action="FollowUnFollow" asp-controller="Follow" asp-route-Id="@ViewBag.userId1" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et</a>
+                                @*<a asp-action="FollowUnFollow" asp-controller="Follow" asp-route-Id="@ViewBag.userId1" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et</a>
                             </td>
                         </tr>
                         <tr>
@@ -55,7 +104,7 @@
                                 <a asp-action="FollowUnFollow" asp-controller="Follow" asp-route-Id="@ViewBag.userId3" class="btn btn-outline-info btn-sm mt-3"><i class="fas fa-user-friends"></i>Takip Et </a>
                             </td>
                         </tr>
-                    </table>
+                    </table>*@
                 </div>
                 </div>
             </div>
