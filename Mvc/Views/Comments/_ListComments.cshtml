@@ -14,23 +14,28 @@
 <hr />
 
 <!--ListComments-->
-<ul class="list-unstyled">
-    @foreach (var comment in Model)
-    {
-        <li class="media hover-media ">
-            <img src=@comment.AppUser.ProfilePicture alt="img" width="60" height="60" class="rounded-circle mr-3">
-            <div class="media-body text-dark">
-                <h6 class="media-header">@($"@{comment.AppUser.UserName}")</h6>
-                <p class="media-text">@comment.Content</p>
-            </div>
-            <!--comment time-->
-            <small>@ViewData[comment.Id.ToString()]</small> 
-        
-        @if (comment.AppUser.UserName == User.Identity.Name)
+
+<div id="plist" class="mt-2 people-list">
+    <ul class="list-unstyled chat-list mt-2 mb-0">
+        @foreach (var comment in Model)
         {
-            <a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-danger btn-sm rounded-circle mt-auto" ><i class="bi-trash"></i></a>
+            <a asp-action="Index" asp-controller="Profile" asp-route-userName="@comment.AppUser.UserName">
+            <li class="clearfix">
+                <img src=@comment.AppUser.ProfilePicture alt="avatar">
+                <div class="about">
+                    <div class="name">@comment.AppUser.FirstName @comment.AppUser.LastName</div>
+                    <div class="status"> <i class="fa fa-circle online"></i> @comment.AppUser.UserName </div>
+                    <p class="media-text text-danger">@comment.Content</p>
+                    
+                </div>
+                <small class="float-right">@ViewData[comment.Id.ToString()]</small>
+            </li>
+            </a>
+            @if (comment.AppUser.UserName == User.Identity.Name)
+            {
+                <a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-danger btn-sm rounded-circle mt-auto"><i class="bi-trash"></i></a>
+            }
+            <hr />
         }
-        </li>
-        <hr class="my-3">   
-    }
-</ul>
+    </ul>
+</div>
