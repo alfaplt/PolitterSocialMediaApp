@@ -1,0 +1,148 @@
+﻿@model List<Message>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/ChatPage.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card chat-app">
+
+                @await Component.InvokeAsync("PeopleList")
+          
+                <div class="chat">
+                    <div class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <img src=@ViewBag.userWithChattingPhoto alt="avatar">
+                                <div class="chat-about">
+                                    <h6 class="m-b-0">@ViewBag.receiverUserName</h6>
+                                    <small>Son Görülme: Az önce</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 hidden-sm text-right">
+                                <a asp-action="DeleteMessages" asp-controller="Messages" asp-route-id="@ViewBag.receiverId" asp-route-userName="@ViewBag.receiverUserName" class="btn btn-outline-secondary"><i class="fa fa-trash" style="color:red"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-history">
+                        <ul class="m-b-0" id="messages">
+
+                            @foreach (var message in Model)
+                            {
+                                <li class="clearfix">
+
+                                    @if (message.Sender.UserName == User.Identity.Name)
+                                    {
+                                        <span class="message-data-time float-right">@message.SendDate</span>
+                                        <br>
+                                        <div class="mt-2 message my-message float-right" id="sendingMessage">@message.Content</div>
+                                    }
+
+                                    else if (message.Receiver.UserName == User.Identity.Name)
+                                    {
+                                        <div class="message-data">
+                                            <span class="message-data-time">@message.SendDate</span>
+                                        </div>
+                                        <div class="message my-message" id="receivingMessage">@message.Content</div>
+                                    }
+
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+
+                    <div class="chat-message clearfix">
+                        <div class="input-group mb-0">
+                            <form  asp-action="SendMessage" asp-controller="Messages" asp-route-userName="@ViewBag.receiverUserName" method="post">
+                                <div class="input-group-prepend">     
+                                    <input type="text" id="newMessage" class="messageContent form-control" placeholder="Mesaj...">
+                                    <input hidden name="Content" id="newMessage2" />
+                                    <button onclick="send()" type="submit" id="btnSendMessage" class="input-group-text"><i class="fa fa-send"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<label hidden id="receiverUserName">@ViewBag.receiverUserName</label>
+<label hidden id="senderUserName">@ViewBag.senderUserName</label>
+<label hidden id="authUserName">@User.Identity.Name</label>
+
+@section Scripts{
+
+	<script>
+	
+        function send() {
+            var messageDate = new Date().toLocaleString();
+            var message = $("#newMessage").val();
+            $('#messages').append(
+
+                `<li class="clearfix">
+                    <span class="message-data-time float-right"> ${messageDate} </span>
+                    </br>
+                    <div class="mt-2 message my-message float-right" id = "sendingMessage" > ${message}</div>
+                </li>`
+
+            );
+        }
+
+		(function () {
+			var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+			connection.start().then(function () {
+
+				try {
+					document.getElementById("connectionState").innerText = "Bağlantı Başarılı";
+				}
+				catch (err) {
+					console.error(err);
+					setTimeout(start, 5000);
+					document.getElementById("connectionState").innerText = "Bağlantı Başarısız!";
+				}
+			});
+
+			$("#btnSendMessage").click(function () {
+
+				try {
+
+                    var senderUserName = document.getElementById("senderUserName").innerText;
+                    var receiverUserName = document.getElementById("receiverUserName").innerText;
+                    var authUserName = document.getElementById("authUserName").innerText;
+                    var message = $("#newMessage").val();
+                    $("#newMessage2").val(message);
+                   
+                    connection.invoke("SendMessage", receiverUserName, message);
+                    $("#newMessage").val("").focus();
+    
+				}
+				catch (err) {
+					console.error(err);
+					setTimeout(start, 5000);
+				}
+
+			});
+
+			connection.on("ReceiveMessage", function (message) {
+                var messageDate = new Date().toLocaleString();
+                $('#messages').append(
+
+                    `<li class="clearfix">
+                        <span class="message-data-time float-left"> ${messageDate} </span>
+                        </br>
+                        <div class="mt-2 message my-message float-left" id = "sendingMessage" > ${message}</div>
+                    </li>`
+
+                );   
+			});   
+		})();
+
+	</script>
+
+}

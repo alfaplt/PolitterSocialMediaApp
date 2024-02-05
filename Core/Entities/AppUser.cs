@@ -21,6 +21,8 @@ namespace Core.Entities
 		public List<Favorite> Favorites { get; set; }
 		public List<Follow> Followings { get; set; }
 		public List<Follow> Followeds { get; set; }
-        
+        public List<Message> SendedMessages { get; set; }
+        public List<Message> ReceivedMessages { get; set; }
+
     }
 }

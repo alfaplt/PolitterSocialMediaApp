@@ -1,0 +1,40 @@
+﻿@model List<Follow>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/ChatPage.css" rel="stylesheet" />
+
+@if (Model.Count == 0)
+{
+    <div class="input-group mb-2">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-search"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="Ara...">
+    </div>
+    <div>Mesaj gönderebilmek için birilerini takip etmelisin</div>
+}
+else
+{
+    <div id="plist" class="mt-2 people-list">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Ara...">
+        </div>  
+        <ul class="list-unstyled chat-list mt-2 mb-0">
+            @foreach (var people in Model)
+            {
+                <a asp-action="ChatPage" asp-controller="Messages" asp-route-userName="@people.Followed.UserName">
+                <li class="clearfix">
+                    <img src=@people.Followed.ProfilePicture alt="avatar">
+                    <div class="about">
+                        <div class="name">@people.Followed.FirstName @people.Followed.LastName</div>
+                        <div class="status"> <i class="fa fa-circle online"></i> çevrimiçi </div>
+                    </div>
+                </li>
+                </a>
+            }
+        </ul>
+    </div>
+}

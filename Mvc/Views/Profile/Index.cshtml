@@ -22,7 +22,11 @@ else
             else
             {
                 <h2 class="mb-5 text-light border border-light">@Model.FirstName @Model.LastName</h2>
-                <a onclick="show()" asp-controller="Follow" asp-action="FollowUnFollow" asp-route-Id="@Model.Id" class="btn btn-info mr-4">@ViewData["followLink"]</a>
+                <div class="container text-center">
+                    <a onclick="show()" asp-controller="Follow" asp-action="FollowUnFollow" asp-route-Id="@Model.Id" class="btn btn-info mr-4">@ViewData["followLink"]</a>
+                    <a class="btn btn-info" asp-action="ChatPage" asp-controller="Messages" asp-route-userName="@Model.UserName">Mesaj Gönder</a>
+                </div>
+                
             }
 
 	    </div>

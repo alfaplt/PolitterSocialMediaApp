@@ -13,15 +13,16 @@ namespace DataAccess
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
 		public DbSet<Follow> Follows { get; set; }
-		#endregion
+        public DbSet<Message> Messages { get; set; }
+        #endregion
 
-		protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
 
 			builder.Entity<Favorite>()
 			  .HasKey(x => new { x.AppUserId, x.PostId });
-
+						//////////////////
 			builder.Entity<Follow>()
 				.HasKey(x => new { x.FollowingId, x.FollowedId });
 
@@ -34,8 +35,19 @@ namespace DataAccess
 				.HasOne(f => f.Followed)
 				.WithMany(u => u.Followeds)
 				.HasForeignKey(f => f.FollowedId);
+						///////////////////
+			builder.Entity<Message>()
+				.HasOne(s => s.Sender)
+				.WithMany(m => m.SendedMessages)
+				.HasForeignKey(s => s.SenderId);
 
-		}
+            builder.Entity<Message>()
+                .HasOne(s => s.Receiver)
+                .WithMany(m => m.ReceivedMessages)
+                .HasForeignKey(s => s.ReceiverId);
+
+
+        }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{

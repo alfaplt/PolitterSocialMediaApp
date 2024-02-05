@@ -16,10 +16,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Mvc.Hubs;
 using System;
 
 namespace Mvc
@@ -47,6 +49,15 @@ namespace Mvc
             services.AddFluentValidationAutoValidation();         
 
             services.AddAutoMapper(typeof(MapProfile));
+            services.AddSignalR();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
 
 			#region Dependency Injections
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -57,9 +68,10 @@ namespace Mvc
             services.AddTransient<IFavoriteService, FavoriteService>();
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<IFollowService, FollowService>();
-            #endregion
+			services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+			#endregion
 
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("connectionString")));
+			services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("connectionString")));
             services.AddIdentity<AppUser, AppRole>(_ =>
             {
                 _.Password.RequiredLength = 5;
@@ -109,11 +121,13 @@ namespace Mvc
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chatHub");
                 endpoints.MapDefaultControllerRoute();
             });
         }

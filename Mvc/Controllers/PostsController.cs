@@ -46,7 +46,7 @@ namespace Mvc.Controllers
             List<int> values = new List<int>();
 
             int nbr1 = randomnbr.Next(x);
-       
+
             int nbr2 = randomnbr.Next(x);
 
             while (nbr1 == authUserIndex)

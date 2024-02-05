@@ -1,0 +1,11 @@
+﻿@model List<Follow>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="card ">
+            <div class="col-md-3 offset-4">
+                @await Component.InvokeAsync("PeopleList")
+            </div>
+        </div> 
+    </div>
+</div>
