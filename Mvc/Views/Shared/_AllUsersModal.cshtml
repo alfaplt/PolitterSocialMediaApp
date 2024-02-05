@@ -1,0 +1,35 @@
+﻿<script>
+
+    $(function () {
+        $("body").on("click", ".allusersview", function () {
+            var url = $(this).data("target");
+            $.post(url, function (data) { })
+
+                .done(function (data) {
+                    $("#modelViewForUsers .modal-body").html(data);
+                    $("#modelViewForUsers").modal("show");
+                })
+
+                .fail(function () {
+                    $("#modelViewForUsers .modal-body").text("Opps!!");
+                    $("#modelViewForUsers").modal("show");
+                })
+
+        });
+    })
+
+</script>
+
+<div class="modal fade" id="modelViewForUsers">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title h4" id="myModalLabel">Politter Kullanıcıları</div>
+                <button type="button" class="close " data-bs-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                @*_ListUsers PartialView*@
+            </div>
+        </div>
+    </div>
+</div>

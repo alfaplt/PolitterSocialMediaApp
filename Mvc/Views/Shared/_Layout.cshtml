@@ -58,12 +58,9 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     @*href="/Account/Profile/@User.Identity.Name"*@
-                    <li class="nav-item mr-2"><a class="nav-link active" asp-controller="Profile" asp-action="Index" asp-route-userName ="@User.Identity.Name" >Profilim</a></li>
-                   @* <li class="nav-item mr-2"><a class="nav-link active" href="#modalview" data-toggle="modal">Mesajlar</a></li>*@
-                   @* <li class="nav-item"><a class="nav-link active" asp-controller="Messages" asp-action="index">Mesajlar</a></li>*@
-
-                    <li class="nav-item"><a data-target="/Messages/_ListPeople" data-toggle="modal" style="margin-right:20px" type="button" class="messageview nav-link active">Mesajlar</a></li>
-
+                    <li class="nav-item mr-3"><a class="nav-link active" asp-controller="Profile" asp-action="Index" asp-route-userName ="@User.Identity.Name" >Profilim</a></li>
+                    <li class="nav-item mr-3"><a data-target="/Messages/_ListPeople" data-toggle="modal" type="button" class="messageview nav-link active">Mesajlar</a></li>
+                    <li class="nav-item mr-3"><a data-target="/Profile/_ListUsers" data-toggle="modal" type="button" class="allusersview nav-link active">Arkadaşını Bul</a></li>
                     <li class="nav-item"><a asp-action="LogOut" asp-controller="Account" class="nav-link active">Çıkış Yap</a></li>
                     @*<li class="nav-item"><a class="nav-link active" href="#"><img src="~/img/avatar-dhg.png" alt="" class="rounded-circle ml-3 d-none d-md-block" width="40px" height="40px"></a></li>*@
                 }
@@ -82,37 +79,9 @@
     </nav>
     <!---------------------------------------------Ends navigation------------------------------>
     <!---------------------------Modal Section  starts------------------->
+
     @await Html.PartialAsync("_MessagesModal")
-
-
-    @*<div class="modal fade" id="modalview">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title h4">Messages</div>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <ul class="list-unstyled">
-                        
-                        <a href="#" class="text-decoration-none">
-                        <li class="media hover-media">
-                            <img src="~/img/avatar-dhg.png" alt="img" width="60px" height="60px" class="rounded-circle mr-3">
-                            <div class="media-body text-dark">
-                                <h6 class="media-header">Jchob Thunder and <strong> 1 others</strong></h6>
-                                <p class="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                            </div>
-                        </li>
-                        </a>
-
-                        <hr class="my-3">
-                       
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-    </div>*@
+    @await Html.PartialAsync("_AllUsersModal")
 
     <!-------------------------------Modal Ends---------------------------->
     <!-------------------------------------------Start Grids layout for lg-xl-3 columns and (xs-lg 1 columns)--------------------------------->

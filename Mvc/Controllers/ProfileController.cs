@@ -1,12 +1,9 @@
-﻿using Business.Abstract;
-using Core.Entities;
+﻿using Core.Entities;
 using DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -53,6 +50,12 @@ namespace Mvc.Controllers
             }
 
             return View(user);
+        }
+        [Route("_ListUsers")]
+        public IActionResult _ListUsers()
+        {
+            var users = _userManager.Users.ToList();
+            return PartialView(users);
         }
     }
 }
