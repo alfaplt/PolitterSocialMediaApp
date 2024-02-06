@@ -145,5 +145,24 @@ namespace Mvc.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public async Task<IActionResult> RePostAsync(int id)
+        {
+            Post rePost = new();
+            rePost.AppUserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+            var userId = rePost.AppUserId;
+            
+            AppUser user = await _userManager.FindByIdAsync(userId.ToString());
+            var post = await _postService.GetPostById(id);
+            rePost.OriginalPostOwner = post.AppUser.UserName;
+            rePost.Content = post.Content;
+            rePost.AppUser = user;
+            rePost.CreatedDate = DateTime.Now;
+            rePost.IsRepost = true;
+
+            await _postService.CreatePost(rePost);
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -33,6 +33,12 @@
                             <div class="media-body">
                                 <div>
                                     <a asp-controller="Profile" asp-action="@post.AppUser.UserName" class="link">@post.AppUser.FirstName @post.AppUser.LastName</a>
+
+                                    @if (post.IsRepost)
+                                    {
+                                        <div class="mb-2 text-danger"> @($"Bu paylaşım '{post.OriginalPostOwner}' kişisinden alıntılanmıştır")  </div>
+                                    }
+                                    
                                     <h6 class="small">@($"@{post.AppUser.UserName}")</h6>
                                 </div>                                   
                                 <hr>
@@ -65,9 +71,9 @@
                                     </i>
                                 </a>
 
-                                @if (post.AppUser.UserName != User.Identity.Name)
+                                @if (post.AppUser.UserName != User.Identity.Name && post.IsRepost == false)
                                 {
-                                    <a style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-arrow-repeat"></i></a>
+                                    <a asp-action="RePost" asp-controller="Posts" asp-route-id="@post.Id" style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-arrow-repeat"></i></a>
                                 }
                                 
                                 <a style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-send"></i></a>
