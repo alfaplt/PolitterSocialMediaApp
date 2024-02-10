@@ -29,7 +29,7 @@ namespace Mvc.Controllers
 			ViewBag.senderId = senderUser.Id;
 			ViewBag.receiverId = userWithChatting.Id;
 		
-			var messages = _context.Messages.Include(x => x.Sender).Include(x => x.Receiver).Where(x => x.SenderId == senderUser.Id && x.ReceiverId == userWithChatting.Id || x.ReceiverId == senderUser.Id && x.SenderId == userWithChatting.Id).ToList();
+			var messages = _context.Messages.Include(x => x.Sender).Include(x => x.Receiver).AsSplitQuery().Where(x => x.SenderId == senderUser.Id && x.ReceiverId == userWithChatting.Id || x.ReceiverId == senderUser.Id && x.SenderId == userWithChatting.Id).ToList();
 
 			return View(messages);
 		}

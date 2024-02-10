@@ -58,11 +58,12 @@
                         <div class="input-group mb-0">
                             <form  asp-action="SendMessage" asp-controller="Messages" asp-route-userName="@ViewBag.receiverUserName" method="post">
                                 <div class="input-group-prepend">     
-                                    <input type="text" id="newMessage" class="messageContent form-control" placeholder="Mesaj...">
+                                    <input type="text" id="newMessage" class="messageContent form-control mr-1" placeholder="Mesaj...">
                                     <input hidden name="Content" id="newMessage2" />
-                                    <button onclick="send()" type="submit" id="btnSendMessage" class="input-group-text"><i class="fa fa-send"></i></button>
+                                    <button onclick="send()" type="submit" id="btnSendMessage" class="input-group-text mr-3"><i class="fa fa-send"></i></button>
                                 </div>
                             </form>
+                            <button onclick="sendSecret()" id="btnSendMessageSecret" class="input-group-text"><i class="fa fa-user-secret"></i></button>
                         </div>
                     </div>
                 </div>
@@ -93,6 +94,21 @@
             );
         }
 
+        function sendSecret() {
+            var messageDate = new Date().toLocaleString();
+            var message = $("#newMessage").val();
+            $('#messages').append(
+
+                `<li class="clearfix">
+                    <span class="message-data-time float-right"> Bu mesaj sayfa yenilendiğinde kaybolur </span>
+                    </br>
+                    <div class="mt-2 message my-message float-right text-danger" id = "sendingMessage" > ${message}</div>
+                </li>`
+
+            );
+        }
+
+
 		(function () {
 			var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
@@ -117,7 +133,7 @@
                     var authUserName = document.getElementById("authUserName").innerText;
                     var message = $("#newMessage").val();
                     $("#newMessage2").val(message);
-                   
+
                     connection.invoke("SendMessage", receiverUserName, message);
                     $("#newMessage").val("").focus();
     
@@ -129,6 +145,25 @@
 
 			});
 
+
+            $("#btnSendMessageSecret").click(function () {
+
+                try {
+
+                    var receiverUserName = document.getElementById("receiverUserName").innerText;
+                    var message = $("#newMessage").val();
+
+                    connection.invoke("SendMessage", receiverUserName, message);
+                    $("#newMessage").val("").focus();
+
+                }
+                catch (err) {
+                    console.error(err);
+                    setTimeout(start, 5000);
+                }
+
+            });
+
 			connection.on("ReceiveMessage", function (message) {
                 var messageDate = new Date().toLocaleString();
                 $('#messages').append(
@@ -139,7 +174,7 @@
                         <div class="mt-2 message my-message float-left" id = "sendingMessage" > ${message}</div>
                     </li>`
 
-                );   
+                );
 			});   
 		})();
 
