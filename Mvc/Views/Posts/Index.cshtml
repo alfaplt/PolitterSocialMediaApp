@@ -75,8 +75,9 @@
                                 {
                                     <a asp-action="RePost" asp-controller="Posts" asp-route-id="@post.Id" style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-arrow-repeat"></i></a>
                                 }
-                                
-                                <a style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-send"></i></a>
+
+                                <a id="linkforcopy" onclick="copy(@post.Id)" style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-send"></i></a>
+                              
                             </div>
 
                             @if(post.AppUser.UserName == User.Identity.Name)
@@ -95,5 +96,11 @@
    
 </div>
 
-
+<script>
+    function copy(id) {
+        var link = `${window.location.host}/Posts/PostPage/${id}`
+        navigator.clipboard.writeText(link);
+        alert("Link koplayalandı!");
+    }
+</script>
 

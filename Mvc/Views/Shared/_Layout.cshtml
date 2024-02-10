@@ -63,6 +63,7 @@
                     @*href="/Account/Profile/@User.Identity.Name"*@
                     <li class="nav-item mr-3"><a class="nav-link active" asp-controller="Profile" asp-action="Index" asp-route-userName ="@User.Identity.Name" >Profilim</a></li>
                     <li class="nav-item mr-3"><a data-target="/Messages/_ListPeople" data-toggle="modal" type="button" class="messageview nav-link active">Mesajlar</a></li>
+                    <li class="nav-item mr-3"><a data-target="/Messages/_NewMessage" data-toggle="modal" type="button" class="newmessageview nav-link active">Yeni Mesaj</a></li>
                     <li class="nav-item mr-3"><a data-target="/Profile/_ListUsers" data-toggle="modal" type="button" class="allusersview nav-link active">Arkadaşını Bul</a></li>
                     <li class="nav-item"><a asp-action="LogOut" asp-controller="Account" class="nav-link active">Çıkış Yap</a></li>
                     @*<li class="nav-item"><a class="nav-link active" href="#"><img src="~/img/avatar-dhg.png" alt="" class="rounded-circle ml-3 d-none d-md-block" width="40px" height="40px"></a></li>*@
@@ -85,6 +86,7 @@
 
     @await Html.PartialAsync("_MessagesModal")
     @await Html.PartialAsync("_AllUsersModal")
+    @await Html.PartialAsync("_NewMessageModal")
 
     <!-------------------------------Modal Ends---------------------------->
     <!-------------------------------------------Start Grids layout for lg-xl-3 columns and (xs-lg 1 columns)--------------------------------->

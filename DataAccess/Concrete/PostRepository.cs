@@ -23,15 +23,15 @@ namespace DataAccess.Concrete
 
         public async Task<Post> GetWithUserByIdAsync(int id)
         {
-            return await _context.Posts.Include(x => x.AppUser).SingleOrDefaultAsync(x => x.Id == id);
+            return await _context.Posts.Include(x => x.AppUser).Include(x => x.Comments).Include(x => x.Favorites).AsSplitQuery().SingleOrDefaultAsync(x => x.Id == id);
         }
         public async Task<IEnumerable<Post>> GetAllWithUserAndCommentsAsync()
         {
-            return await _context.Posts.Include(x => x.AppUser).Include(x => x.Comments).Include(x => x.Favorites).OrderByDescending(x => x.CreatedDate).ToListAsync();
+            return await _context.Posts.Include(x => x.AppUser).Include(x => x.Comments).Include(x => x.Favorites).AsSplitQuery().OrderByDescending(x => x.CreatedDate).ToListAsync();
         }
         public IQueryable<Post> GetAllWithUserAndCommentsForPagedList()
         {
-            return _context.Posts.Include(x => x.AppUser).Include(x => x.Comments).Include(x => x.Favorites).OrderByDescending(x => x.CreatedDate);
+            return _context.Posts.Include(x => x.AppUser).Include(x => x.Comments).Include(x => x.Favorites).AsSplitQuery().OrderByDescending(x => x.CreatedDate);
         }
 
     }

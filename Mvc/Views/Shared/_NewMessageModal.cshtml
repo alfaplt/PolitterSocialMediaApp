@@ -1,7 +1,7 @@
 ﻿<script>
 
     $(function () {
-        $("body").on("click", ".messageview", function () {
+        $("body").on("click", ".newmessageview", function () {
             var url = $(this).data("target");
             $.post(url, function (data) { })
 
@@ -24,11 +24,11 @@
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title h4" id="myModalLabel">Mesajlarım</div>
+                <div class="modal-title h4" id="myModalLabel">Mesaj Gönder</div>
                 <button type="button" class="close " data-bs-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                @*_ListPeople PartialView*@
+                @*_NewMessage PartialView*@
             </div>
         </div>
     </div>

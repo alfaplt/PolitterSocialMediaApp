@@ -54,13 +54,13 @@ namespace Mvc.Controllers
             return PartialView();
 		}
 
-		
-		public async Task<IActionResult> DeleteMessagesAsync(int id, string userName)
+        public async Task<IActionResult> DeleteMessagesAsync(int id)
 		{
             AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+			AppUser userWithChatting = await _userManager.FindByIdAsync(id.ToString());
             var messages = _context.Messages.Where(x => x.SenderId == id && x.ReceiverId == user.Id || x.SenderId == user.Id && x.ReceiverId == id).ToList();
             _context.Messages.RemoveRange(messages);
-			_context.SaveChanges();
+            _context.SaveChanges();
 			return RedirectToAction("Index");
 		}
 
@@ -68,6 +68,13 @@ namespace Mvc.Controllers
 		{
 			return View();
 		}
+
+		public async Task<IActionResult> _NewMessage()
+		{
+            var users = _userManager.Users.ToList();
+			users.Remove(await _userManager.FindByNameAsync(User.Identity.Name));
+            return PartialView(users);
+        }
         
     }
 }

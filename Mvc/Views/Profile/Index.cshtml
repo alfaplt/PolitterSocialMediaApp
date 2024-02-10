@@ -6,10 +6,9 @@
 }
 else
 {
-
     @await Html.PartialAsync("_CommentModal")
     @await Html.PartialAsync("_FollowsModal")
-
+    
     <div class="banner mb-5" style="background-image: url('/img/backgrounds/bg.jpg');">
 	    <div class="banner-title d-flex flex-column justify-content-center align-items-center">
 		    <img src=@Model.ProfilePicture alt="img" class="rounded-circle" width="200" height="200">
@@ -23,23 +22,26 @@ else
             {
                 <h2 class="mb-5 text-light border border-light">@Model.FirstName @Model.LastName</h2>
                 <div class="container text-center">
-                    <a onclick="show()" asp-controller="Follow" asp-action="FollowUnFollow" asp-route-Id="@Model.Id" class="btn btn-info mr-4">@ViewData["followLink"]</a>
-                    <a class="btn btn-info" asp-action="ChatPage" asp-controller="Messages" asp-route-userName="@Model.UserName">Mesaj Gönder</a>
+                    <a onclick="show()" asp-controller="Follow" asp-action="FollowUnFollow" asp-route-Id="@Model.Id" class="btn btn-info mr-3">@ViewData["followLink"]</a>
+                    <a class="btn btn-info mr-3" asp-action="ChatPage" asp-controller="Messages" asp-route-userName="@Model.UserName">Mesaj Gönder</a>
+                    
+                    <a class="link btn btn-info followers mr-3" data-toogle="modal" data-target="/Follow/_ListFollowers/@Model.Id">Takipçiler</a>
+                    <a class="link btn btn-info followings mr-3 " data-toogle="modal" data-target="/Follow/_ListFollowings/@Model.Id">Takip Edilenler</a>
+                   
                 </div>
                 
             }
-
+            
 	    </div>
     </div>
-
+    
     <ul class="list-unstyled nav justify-content-center mb-5">
 
-        <li class="nav-item text-center"><a class="link followers" data-toogle="modal" data-target="/Follow/_ListFollowers/@Model.Id">Takipçi</a>---<br> <strong>@Model.Followeds.Count</strong></li>
+        <li class="nav-item text-center"><a class="link followers" data-toogle="modal" data-target="/Follow/_ListFollowers/@Model.Id">Takipçiler</a>---<br> <strong>@Model.Followeds.Count</strong></li>
 
-        <li class="nav-item text-center"><a class="link followings" data-toogle="modal" data-target="/Follow/_ListFollowings/@Model.Id">Takip Edilen</a><br> <strong>@Model.Followings.Count</strong></li>
-        
+        <li class="nav-item text-center"><a class="link followings" data-toogle="modal" data-target="/Follow/_ListFollowings/@Model.Id">Takip Edilenler</a><br> <strong>@Model.Followings.Count</strong></li>
     </ul>
-
+  
     <div class="row">
         <div class="col-md-6 offset-md-3 ">
             <table class="table table-bordered table-hover ">
@@ -80,7 +82,6 @@ else
 
             </table>
             <div class="middle-column">
-
                 @foreach(var post in Model.Posts)
                 {
                     <div class="card custombg">
@@ -90,6 +91,10 @@ else
                                 <div class="media-body">
                                     <div>
                                         <h5>@Model.FirstName @Model.LastName</h5>
+                                        @if (post.IsRepost)
+                                        {
+                                            <div class="mb-2 text-danger"> @($"Bu paylaşım '{post.OriginalPostOwner}' kişisinden alıntılanmıştır")  </div>
+                                        }
                                         <h6 class="small">@($"@{Model.UserName}")</h6>
                                     </div>
                                     <hr>
@@ -97,7 +102,7 @@ else
                                         @post.Content
                                     </p>
                                 </div>
-                                <small>@ViewData[post.Id.ToString()]</small>
+                                <small>@post.CreatedDate</small>
                             </div>
                             <div @*buttons*@>
                                 <div class="btn-group text-sm-center float-right" role="group" aria-label="Basic example" style="margin-top:20px">
@@ -114,14 +119,13 @@ else
                                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@Model.Comments.Where(x => x.PostId == post.Id).Count()</span>
                                         </i>
                                     </a>
-
-                                    @if (post.AppUser.UserName != User.Identity.Name)
-
+    
+                                    @if (post.AppUser.UserName != User.Identity.Name && post.IsRepost == false)
                                     {
-                                        <a style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-arrow-repeat"></i></a>
+                                        <a asp-action="RePost" asp-controller="Posts" asp-route-id="@post.Id" style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-arrow-repeat"></i></a>
                                     }
 
-                                    <a style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-send"></i></a>
+                                    <a id="linkforcopy" onclick="copy(@post.Id)" style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-send"></i></a>
                                 </div>
 
                                 @if (post.AppUser.UserName == User.Identity.Name) {
@@ -142,6 +146,12 @@ else
 <script>
     function show() {
         alert("İşlem başarılı! Anasayfaya yönlendiriliyorsunuz.");
+    }
+
+    function copy(id) {
+        var link = `${window.location.host}/Posts/PostPage/${id}`
+        navigator.clipboard.writeText(link);
+        alert("Link koplayalandı!");
     }
 </script>
 

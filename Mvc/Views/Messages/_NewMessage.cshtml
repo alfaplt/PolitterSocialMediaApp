@@ -1,0 +1,45 @@
+﻿@model List<AppUser>
+
+<div class="input-group mb-2">
+    <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fa fa-search"></i></span>
+    </div>
+    <input type="text" class="form-control" id="search" placeholder="Ara...">
+</div>
+
+<div id="plist" class="mt-2 people-list">
+    <ul class="list-unstyled chat-list mt-2 mb-0">
+        @foreach (var user in Model)
+        {
+            <a asp-action="ChatPage" asp-controller="Messages" asp-route-userName="@user.UserName">
+            <li class="clearfix">
+                <div class="containeritem">
+                    <img src=@user.ProfilePicture alt="avatar">
+                    <div class="about">
+                        <div class="name">@user.FirstName @user.LastName</div>
+                        <div class="status"> <i class="fa fa-circle online"></i> @user.UserName </div>
+                    </div>
+                </div>
+            </li>
+            </a>
+        }
+    </ul>
+</div>
+<script>
+    $('#search').keyup(function () {
+        if ($('#search').val().length < 2) {
+            var tg = $('.containeritem');
+            tg.show();
+            return;
+        }
+        $('.containeritem').hide();
+
+        var txt = $('#search').val();
+        $('.containeritem').each(function () {
+            if ($(this).text().toUpperCase().indexOf(txt.toUpperCase()) != -1) {
+                $(this).show();
+            }
+        });
+        var t = $('.containeritem:visible');
+    });
+</script>

@@ -161,7 +161,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Favorite", b =>
@@ -176,7 +176,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Favorites");
+                    b.ToTable("Favorites", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Follow", b =>
@@ -191,7 +191,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("FollowedId");
 
-                    b.ToTable("Follows");
+                    b.ToTable("Follows", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Message", b =>
@@ -220,7 +220,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Post", b =>
@@ -250,7 +250,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

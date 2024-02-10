@@ -1,0 +1,78 @@
+﻿@model Post
+
+@await Html.PartialAsync("_CommentModal")
+
+@if (ViewBag.message != null)
+{
+    <div class="card card-body text-danger ">@ViewBag.message</div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <div class="card custombg">
+                <div class="card-body">
+                    <div class="media">
+                        <img src=@Model.AppUser.ProfilePicture alt="img" width="55" height="55" class="rounded-circle mr-3">
+                        <div class="media-body">
+                            <div>
+                                <a asp-controller="Profile" asp-action="@Model.AppUser.UserName" class="link">@Model.AppUser.FirstName @Model.AppUser.LastName</a>
+
+                                @if (@Model.IsRepost)
+                                {
+                                    <div class="mb-2 text-danger"> @($"Bu paylaşım '{Model.OriginalPostOwner}' kişisinden alıntılanmıştır")  </div>
+                                }
+
+                                <h6 class="small">@($"@{Model.AppUser.UserName}")</h6>
+                            </div>
+                            <hr>
+                            <p class="text-justify">
+                                @Model.Content
+                            </p>
+                        </div>
+
+                        <small>@Model.CreatedDate</small>
+                    </div>
+
+                    <div @*buttons*@>
+
+                        <div class="btn-group text-sm-center float-right" role="group" aria-label="Basic example" style="margin-top:20px">
+
+                            <a asp-action="Favorite" asp-controller="Favorite" asp-route-id="@Model.Id" style="margin-right:20px" type="button" class="btn btn-info rounded-circle btn-sm">
+                                <i class="bi-heart" style="color:black">
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@Model.Favorites.Count</span>
+                                </i>
+                            </a>
+
+                            <a data-target="/Comments/_ListComments/@Model.Id" data-toggle="modal" style="margin-right:20px" type="button" class="commentview btn btn-info btn-sm rounded-circle">
+                                <i class="bi-chat" style="color:black">
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@Model.Comments.Count</span>
+                                </i>
+                            </a>
+
+                            @if (Model.AppUser.UserName != User.Identity.Name && Model.IsRepost == false)
+                            {
+                                <a asp-action="RePost" asp-controller="Posts" asp-route-id="@Model.Id" style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-arrow-repeat"></i></a>
+                            }
+
+                            <a id="linkforcopy" onclick="copy(@Model.Id)" style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-send"></i></a>
+                        </div>
+
+                        @if (Model.AppUser.UserName == User.Identity.Name)
+                        {
+                            <a asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-sm rounded-circle float-left " style="margin-top:20px"><i class="bi-trash"></i></a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function copy(id) {
+        var link = `${window.location.host}/Posts/PostPage/${id}`
+        navigator.clipboard.writeText(link);
+        alert("Link koplayalandı!");
+    }
+</script>    

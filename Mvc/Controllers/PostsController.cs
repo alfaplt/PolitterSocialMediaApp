@@ -131,12 +131,16 @@ namespace Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePost(Post post)
         {
-            post.CreatedDate = DateTime.Now;
-            var userName = User.Identity.Name;
-            post.AppUserId = _userManager.Users.Where(x => x.UserName == userName).SingleOrDefault().Id;
-            
-            await _postService.CreatePost(post);
-            return RedirectToAction("Index");
+            if(post.Content != null)
+            {
+                post.CreatedDate = DateTime.Now;
+                var userName = User.Identity.Name;
+                post.AppUserId = _userManager.Users.Where(x => x.UserName == userName).SingleOrDefault().Id;
+
+                await _postService.CreatePost(post);
+                return RedirectToAction("Index");
+            }
+            return NoContent();
         }
 
         public async Task<IActionResult> Delete(Post post)
@@ -144,7 +148,6 @@ namespace Mvc.Controllers
             await _postService.DeletePost(post);
             return RedirectToAction("Index");
         }
-
 
         public async Task<IActionResult> RePostAsync(int id)
         {
@@ -164,5 +167,14 @@ namespace Mvc.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> PostPage(int Id)
+        {
+            Post post = await _postService.GetPostById(Id);
+            if (post == null) 
+            {
+                ViewBag.message = "Böyle bir paylaşım yok!";
+            }
+            return View(post);
+        }
     }
 }
