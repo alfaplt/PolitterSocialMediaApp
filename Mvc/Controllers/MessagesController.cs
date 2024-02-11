@@ -3,6 +3,7 @@ using DataAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,7 +47,8 @@ namespace Mvc.Controllers
 			_context.Messages.Add(message);
 			_context.SaveChanges();
 
-			return NoContent();
+			return RedirectToAction("ChatPage", "Messages", new { userName = userName });
+            //return NoContent();
 		}
 
 		public IActionResult _ListPeople()

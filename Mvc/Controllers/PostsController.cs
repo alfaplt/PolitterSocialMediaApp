@@ -136,7 +136,7 @@ namespace Mvc.Controllers
                 post.CreatedDate = DateTime.Now;
                 var userName = User.Identity.Name;
                 post.AppUserId = _userManager.Users.Where(x => x.UserName == userName).SingleOrDefault().Id;
-
+                post.OriginalPostOwner = userName;
                 await _postService.CreatePost(post);
                 return RedirectToAction("Index");
             }

@@ -289,6 +289,13 @@ namespace Mvc.Controllers
 			return View();
 		}
 
-
+        public async Task<IActionResult> DeleteAccount()
+        {
+            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            user.Isdeleted = true;
+			await _userManager.UpdateAsync(user);
+			await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
 	}
 }

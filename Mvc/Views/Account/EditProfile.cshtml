@@ -55,14 +55,18 @@
 
 			<button class="btn btn-info" type="submit">Profili Güncelle</button>
 
-</form>
-			<a asp-action="ChangePassword" asp-controller="Account" class="btn btn-danger float-right">Parolayı Güncelle</a>
+		</form>
+			<a asp-action="ChangePassword" asp-controller="Account" class="btn btn-danger float-right">Parolayı Güncelle</a> <br />
+			@*<a onclick="deleteProfile()" asp-action="DeleteAccount" asp-controller="Account" class="btn btn-danger align-bottom">Hesabımı Sil!</a>*@
 	</div>
 </div>
 	
 <script>
 	function alertFunc() {
 		alert("Fotoğraf yüklemek için aşağıdaki 'Dosya Seç' butonuna tıklayınız");
+	}
+	function deleteProfile() {
+		alert("Hesabın silindi :( ");
 	}
 </script>
 

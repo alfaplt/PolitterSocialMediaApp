@@ -54,9 +54,9 @@
                         </ul>
                     </div>
 
-                    <div class="chat-message clearfix">
+                    <div class="chat-message clearfix ">
                         <div class="input-group mb-0">
-                            <form  asp-action="SendMessage" asp-controller="Messages" asp-route-userName="@ViewBag.receiverUserName" method="post">
+                            <form asp-action="SendMessage" asp-controller="Messages" asp-route-userName="@ViewBag.receiverUserName" method="post">
                                 <div class="input-group-prepend">     
                                     <input type="text" id="newMessage" class="messageContent form-control mr-1" placeholder="Mesaj...">
                                     <input hidden name="Content" id="newMessage2" />
@@ -83,6 +83,7 @@
         function send() {
             var messageDate = new Date().toLocaleString();
             var message = $("#newMessage").val();
+
             $('#messages').append(
 
                 `<li class="clearfix">
