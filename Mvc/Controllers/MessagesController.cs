@@ -1,4 +1,6 @@
-﻿using Core.Entities;
+﻿using Business.Abstract;
+using Business.Concrete;
+using Core.Entities;
 using DataAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +16,12 @@ namespace Mvc.Controllers
 	{
 		private readonly UserManager<AppUser> _userManager;
 		private readonly AppDbContext _context;
-        public MessagesController(UserManager<AppUser> userManager, AppDbContext context)
+		private readonly IMailService _mailService;
+        public MessagesController(UserManager<AppUser> userManager, AppDbContext context, IMailService mailService)
         {
             _userManager = userManager;
             _context = context;
+            _mailService = mailService;
         }
 
         public async Task<IActionResult> ChatPage(string userName)
@@ -46,6 +50,7 @@ namespace Mvc.Controllers
 			message.ReceiverId = receiverUser.Id;
 			_context.Messages.Add(message);
 			_context.SaveChanges();
+			_mailService.SendMailForIncomingMessage(senderUser, receiverUser, message);
 
 			return RedirectToAction("ChatPage", "Messages", new { userName = userName });
             //return NoContent();

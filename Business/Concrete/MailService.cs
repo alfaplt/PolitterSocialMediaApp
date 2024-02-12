@@ -14,7 +14,27 @@ namespace Business.Concrete
         {
             _configuration = configuration;
         }
-    
+
+        public void SendMailForIncomingMessage(AppUser senderUser, AppUser receiverUser, Message message)
+        {
+            MimeMessage mimeMessage = new();
+            MailboxAddress mailboxAddressFrom = new("Politter", _configuration["Email:mailAdress"]);
+            mimeMessage.From.Add(mailboxAddressFrom);
+            MailboxAddress mailboxAddressTo = new(receiverUser.FirstName, receiverUser.Email);
+            mimeMessage.To.Add(mailboxAddressTo);
+            BodyBuilder bodyBuilder = new();
+            bodyBuilder.TextBody = $"{senderUser.FirstName} {senderUser.LastName} kullanıcısı size bir mesaj gönderdi. '{message.Content}' " +
+                $" Cevap vermek için tıklayın: https://www.politter.com.tr";
+            mimeMessage.Body = bodyBuilder.ToMessageBody();
+            mimeMessage.Subject = "Yeni mesajınız var!";
+            SmtpClient client = new();
+            client.Connect(_configuration["Email:mailClient"], 587, false);
+            // Password coming from user secrets
+            client.Authenticate(_configuration["Email:mailAdress"], _configuration["Email:mailPassword"]);
+            client.Send(mimeMessage);
+            client.Disconnect(true);
+        }
+
         public void SendMailForResetPassword(AppUser user, string passwordResetTokenLink)
 		{
 			MimeMessage mimeMessage = new();

@@ -61,6 +61,11 @@ else
                     <td>@Model.UserName</td>
     
                 </tr>
+                <tr>
+                    <th>Hakkında:</th>
+                    <td>@Model.About</td>
+
+                </tr>
                 @if (@Model.UserName == User.Identity.Name)
                 {
                     <tr>
@@ -73,11 +78,7 @@ else
                     <td>@Model.PhoneNumber</td>
 
                     </tr>
-                    <tr>
-                        <th>Hakkında:</th>
-                        <td>@Model.About</td>
-
-                    </tr>
+                    
                 }
 
             </table>
