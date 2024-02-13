@@ -41,6 +41,7 @@ namespace Mvc.Controllers
                 .Include(x => x.Comments)
                 .Include(x => x.Favorites) 
                 .AsSplitQuery()
+                .OrderByDescending(x => x.CreatedDate)
                 .ToList();
 
             UserPosts userPosts = new()
