@@ -53,21 +53,28 @@ namespace Mvc.Controllers
 
             var follows = _context.Follows.Include(x => x.Following).Include(x => x.Followed).ToList();
 
-            int authUserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
-
-            if (user != null)
+            if(User.Identity.Name != null)
             {
-                var follow = _context.Follows.FirstOrDefault(x => x.FollowingId == authUserId && x.FollowedId == user.Id);
+                int authUserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
 
-                if (follows.Contains(follow))
+                if (user != null)
                 {
-                    ViewData["followLink"] = "Takibi Bırak";
-                }
-                else
-                {
-                    ViewData["followLink"] = "Takip Et";
+                    var follow = _context.Follows.FirstOrDefault(x => x.FollowingId == authUserId && x.FollowedId == user.Id);
+
+                    if (follows.Contains(follow))
+                    {
+                        ViewData["followLink"] = "Takibi Bırak";
+                    }
+                    else
+                    {
+                        ViewData["followLink"] = "Takip Et";
+                    }
                 }
             }
+            ViewData["followLink"] = "Takip Et";
+
+
+
 
             return View(userPosts);
         }

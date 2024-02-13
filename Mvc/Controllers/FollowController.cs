@@ -1,9 +1,9 @@
 ﻿using Business.Abstract;
 using Core.Entities;
 using DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Math.EC.Rfc7748;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -49,6 +49,8 @@ namespace Mvc.Controllers
             return RedirectToAction("index", "posts");
         }
 
+
+        [AllowAnonymous]
         public IActionResult _ListFollowings(int Id)
         {
             var followings = _context.Follows.Include(x => x.Following).Include(x => x.Followed).Where(x => x.Following.Id == Id).ToList();
@@ -56,6 +58,8 @@ namespace Mvc.Controllers
             return PartialView(followings);
         }
 
+
+        [AllowAnonymous]
         public IActionResult _ListFollowers(int Id)
         {
             var followeds = _context.Follows.Include(x => x.Following).Include(x => x.Followed).Where(x => x.Followed.Id == Id).ToList();

@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Entities;
 using DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace Mvc.Controllers
             _userManager = userManager;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> _ListComments(int Id)
         {
             ViewBag.Id = Id;
