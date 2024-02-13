@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Mvc.Models.ViewModels;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,6 +36,20 @@ namespace Mvc.Controllers
                 .AsSplitQuery() // for more performance
                 .SingleOrDefault();
 
+            var posts = _context.Posts
+                .Where(x => x.AppUser == user)
+                .Include(x => x.Comments)
+                .Include(x => x.Favorites) 
+                .AsSplitQuery()
+                .ToList();
+
+            UserPosts userPosts = new()
+            {
+                AppUser = user,
+                Posts = posts
+            };
+
+
             var follows = _context.Follows.Include(x => x.Following).Include(x => x.Followed).ToList();
 
             int authUserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
@@ -53,7 +68,7 @@ namespace Mvc.Controllers
                 }
             }
 
-            return View(user);
+            return View(userPosts);
         }
 
         [Route("_ListUsers")]

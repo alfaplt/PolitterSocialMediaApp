@@ -98,7 +98,7 @@ namespace Mvc
                     SecurePolicy = CookieSecurePolicy.SameAsRequest //Cookie’leri hem HTTP hemde HTTPS protokolü üzerinden eriþilebilir yapar.
                 };
                 _.SlidingExpiration = true; //Expiration süresinin yarýsý kadar süre zarfýnda istekte bulunulursa eðer geri kalan yarýsýný tekrar sýfýrlayarak ilk ayarlanan süreyi tazeleyecektir.
-                _.ExpireTimeSpan = TimeSpan.FromHours(1); //CookieBuilder nesnesinde tanýmlanan Expiration deðerinin varsayýlan deðerlerle ezilme ihtimaline karþýn tekrardan Cookie vadesi burada da belirtiliyor.
+                _.ExpireTimeSpan = TimeSpan.FromDays(10); //CookieBuilder nesnesinde tanýmlanan Expiration deðerinin varsayýlan deðerlerle ezilme ihtimaline karþýn tekrardan Cookie vadesi burada da belirtiliyor.
             });
 
 
