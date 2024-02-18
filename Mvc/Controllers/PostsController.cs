@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Entities;
 using DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -167,6 +168,7 @@ namespace Mvc.Controllers
             return RedirectToAction("Index");
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> PostPage(int Id)
         {
             Post post = await _postService.GetPostById(Id);
