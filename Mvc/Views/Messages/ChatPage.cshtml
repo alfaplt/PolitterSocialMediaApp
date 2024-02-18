@@ -16,7 +16,8 @@
                             <div class="col-lg-6">
                                 <img src=@ViewBag.userWithChattingPhoto alt="avatar">
                                 <div class="chat-about">
-                                    <h6 class="m-b-0">@ViewBag.receiverUserName</h6>
+                                    <a class="link m-b-0" asp-action="index" asp-controller="Profile" asp-route-userName=@ViewBag.receiverUserName>@ViewBag.receiverUserName</a>
+                                    <br />
                                     <small>Son Görülme: Az önce</small>
                                 </div>
                             </div>
