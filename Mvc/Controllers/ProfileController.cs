@@ -50,10 +50,9 @@ namespace Mvc.Controllers
                 Posts = posts
             };
 
-
             var follows = _context.Follows.Include(x => x.Following).Include(x => x.Followed).ToList();
 
-            if(User.Identity.Name != null)
+            if(User.Identity.IsAuthenticated)
             {
                 int authUserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
 
@@ -71,11 +70,11 @@ namespace Mvc.Controllers
                     }
                 }
             }
-            ViewData["followLink"] = "Takip Et";
-
-
-
-
+            else
+            {
+                ViewData["followLink"] = "Takip Et";
+            }
+            
             return View(userPosts);
         }
 
