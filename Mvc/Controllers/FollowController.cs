@@ -18,7 +18,7 @@ namespace Mvc.Controllers
             _context = context;
             _followService = followService;
         }
-        public async Task<IActionResult> FollowUnFollow(int Id)
+        public async Task<IActionResult> FollowUnFollow(int Id, bool? isComingFromProfile)
         {
             var userName = User.Identity.Name;
             AppUser user = _context.Users.Where(x => x.UserName == userName).FirstOrDefault();
@@ -46,7 +46,15 @@ namespace Mvc.Controllers
                 }
             }   
 
-            return RedirectToAction("index", "posts");
+            if(isComingFromProfile == true)
+            {
+                return RedirectToAction("index", "profile", new {followedUser.UserName});
+            }
+            else
+            {
+                return RedirectToAction("index", "posts");
+            }
+            
         }
 
 

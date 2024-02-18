@@ -22,7 +22,7 @@ else
             {
                 <h2 class="mb-5 text-light border border-light">@Model.AppUser.FirstName @Model.AppUser.LastName</h2>
                 <div class="container text-center">
-                    <a onclick="show()" asp-controller="Follow" asp-action="FollowUnFollow" asp-route-Id="@Model.AppUser.Id" class="btn btn-info mr-3">@ViewData["followLink"]</a>
+                    <a asp-controller="Follow" asp-action="FollowUnFollow" asp-route-Id="@Model.AppUser.Id" asp-route-isComingFromProfile="@true" class="btn btn-info mr-3">@ViewData["followLink"]</a>
                     <a class="btn btn-info mr-3" asp-action="ChatPage" asp-controller="Messages" asp-route-userName="@Model.AppUser.UserName">Mesaj Gönder</a>
                     
                     <a class="link btn btn-info followers mr-3" data-toogle="modal" data-target="/Follow/_ListFollowers/@Model.AppUser.Id">Takipçiler</a>
@@ -145,10 +145,6 @@ else
 }
 
 <script>
-    function show() {
-        alert("İşlem başarılı! Anasayfaya yönlendiriliyorsunuz.");
-    }
-
     function copy(id) {
         var link = `${window.location.host}/Posts/PostPage/${id}`
         navigator.clipboard.writeText(link);
