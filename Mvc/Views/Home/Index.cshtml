@@ -1,4 +1,4 @@
-﻿
+﻿@await Html.PartialAsync("_AllUsersModal")
 
 <div class="row"> 
     <div class="col-md-8 offset-md-2">
@@ -14,6 +14,10 @@
                         <a class="btn btn-primary" asp-action="SignIn" asp-controller="Account">Giriş Yap</a>
                     </div>
                 </div>
+            </div>
+            <div class="row justify-content-center ">
+                <a data-target="/Profile/_ListUsers" data-toggle="modal" class="btn btn-info allusersview" style="width:fit-content">Arkadaşlarını bul</a>
+                @*<li class="nav-item mr-3"><a data-target="/Profile/_ListUsers" data-toggle="modal" type="button" class="allusersview nav-link active">Arkadaşını Bul</a></li>*@
             </div>
             <br /> <br /><br /> <br /><br /> <br />
         </div>

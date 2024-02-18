@@ -83,7 +83,12 @@ namespace Mvc.Controllers
         public async Task<IActionResult> _ListUsersAsync()
         {
             var users = _userManager.Users.ToList();
-            users.Remove(await _userManager.FindByNameAsync(User.Identity.Name));
+
+            if(User.Identity.IsAuthenticated)
+            {
+                users.Remove(await _userManager.FindByNameAsync(User.Identity.Name));
+            }
+            
             return PartialView(users);
         }
     }
