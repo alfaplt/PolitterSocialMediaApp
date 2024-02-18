@@ -72,6 +72,7 @@ namespace Mvc.Controllers
 
 				if (result.Succeeded)
 				{
+                    _mailService.SendMailForLogging(appUser);
 					return RedirectToAction("SignIn", "Account");
 				}
 				else
