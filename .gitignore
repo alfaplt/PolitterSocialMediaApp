@@ -376,3 +376,6 @@ appsettings.Development.json
 /Business/Business.csproj
 /.gitignore
 /.gitignore
+
+bfg.jar
+bfg.txt
