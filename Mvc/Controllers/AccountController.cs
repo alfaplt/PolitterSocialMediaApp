@@ -167,9 +167,13 @@ namespace Mvc.Controllers
                     string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                     FileInfo oldPicture = new FileInfo($"{path}{user.ProfilePicture}");
 
+                    string fullPath = Path.Combine(path, oldPicture.ToString());
+                    DirectoryInfo cartoonsInfo = new DirectoryInfo(Path.Combine(path, "img\\profilePictures\\cartoons"));
+
                     user.ProfilePicture = newPicture;
                     userDto.ProfilePicture = user.ProfilePicture;
-                    if (System.IO.File.Exists(oldPicture.ToString()))
+                    // To avoid deleting pictures from cartoons
+                    if (System.IO.File.Exists(oldPicture.ToString()) && Directory.GetParent(fullPath).ToString() != cartoonsInfo.ToString())
                     {
                         oldPicture.Delete();
                     }   
