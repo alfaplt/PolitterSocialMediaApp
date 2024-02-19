@@ -32,6 +32,6 @@
 
 <h4>Verilerinizin gizliliği:</h4>
 <ul>
-	<li>Politter'a kaydolurken alınan isim, soyisim, e-posta gibi kişisel verileriniz keydedilir ancak hiç kimseyle veya kuruluşla paylaşılmaz!</li>
+	<li>Politter'a kaydolurken alınan isim, soyisim, e-posta gibi kişisel verileriniz kaydedilir ancak hiç kimseyle veya kuruluşla paylaşılmaz!</li>
 </ul>
 
