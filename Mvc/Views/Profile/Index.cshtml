@@ -108,7 +108,7 @@ else
                             <div @*buttons*@>
                                 <div class="btn-group text-sm-center float-right" role="group" aria-label="Basic example" style="margin-top:20px">
 
-                                    <a asp-action="Favorite" asp-controller="Favorite" asp-route-id="@post.Id" style="margin-right:20px" type="button" class="btn btn-info rounded-circle btn-sm">
+                                    <a asp-action="Favorite" asp-controller="Favorite" asp-route-id="@post.Id" asp-route-isComingFromProfile=@true style="margin-right:20px" type="button" class="btn btn-info rounded-circle btn-sm">
                                         <i class="bi-heart" style="color:black">
                                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@post.Favorites.Count</span>
                                         </i>
@@ -123,7 +123,7 @@ else
     
                                     @if (post.AppUser.UserName != User.Identity.Name && post.IsRepost == false)
                                     {
-                                        <a asp-action="RePost" asp-controller="Posts" asp-route-id="@post.Id" style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-arrow-repeat"></i></a>
+                                        <a onclick="rePostAlert()" asp-action="RePost" asp-controller="Posts" asp-route-id="@post.Id" asp-route-isComingFromProfile=@true style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-arrow-repeat"></i></a>
                                     }
 
                                     <a id="linkforcopy" onclick="copy(@post.Id)" style="margin-right:20px; color:black" class="btn btn-info btn-sm rounded-circle"><i class="bi-send"></i></a>
@@ -149,6 +149,10 @@ else
         var link = `${window.location.host}/Posts/PostPage/${id}`
         navigator.clipboard.writeText(link);
         alert("Link koplayalandı!");
+    }
+
+    function rePostAlert() {
+        alert("Polit yeniden paylaşıldı!")
     }
 </script>
 

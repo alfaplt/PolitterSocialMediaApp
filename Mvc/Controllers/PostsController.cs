@@ -150,7 +150,7 @@ namespace Mvc.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> RePostAsync(int id)
+        public async Task<IActionResult> RePostAsync(int id, bool? isComingFromProfile)
         {
             Post rePost = new();
             rePost.AppUserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
@@ -165,7 +165,15 @@ namespace Mvc.Controllers
             rePost.IsRepost = true;
 
             await _postService.CreatePost(rePost);
-            return RedirectToAction("Index");
+
+            if (isComingFromProfile == true)
+            {
+                return RedirectToAction("index", "profile", new { post.AppUser.UserName });
+            }
+            else
+            {
+                return RedirectToAction("index", "posts");
+            }
         }
 
         [AllowAnonymous]

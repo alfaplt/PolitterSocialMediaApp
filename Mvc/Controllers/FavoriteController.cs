@@ -19,7 +19,7 @@ namespace Mvc.Controllers
 			_context = context;
 			_favoriteService = favoriteService;
 		}
-        public async Task<IActionResult> Favorite(int Id)
+        public async Task<IActionResult> Favorite(int Id, bool? isComingFromProfile)
         {
 
             var userName = User.Identity.Name;
@@ -47,8 +47,15 @@ namespace Mvc.Controllers
                     await _favoriteService.Favorite(newFav);
                 }
             }
-            
-            return RedirectToAction("index", "posts");
+
+            if (isComingFromProfile == true)
+            {
+                return RedirectToAction("index", "profile", new { postToFav.AppUser.UserName });
+            }
+            else
+            {
+                return RedirectToAction("index", "posts");
+            }
         }
     }
 }
