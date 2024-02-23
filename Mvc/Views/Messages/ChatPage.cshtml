@@ -46,7 +46,7 @@
                                         <div class="message-data">
                                             <span class="message-data-time">@message.SendDate</span>
                                         </div>
-                                        <div class="message my-message" id="receivingMessage">@message.Content</div>
+                                        <div class="message other-message" id="receivingMessage">@message.Content</div>
                                     }
 
                                 </li>
@@ -173,7 +173,7 @@
                     `<li class="clearfix">
                         <span class="message-data-time float-left"> ${messageDate} </span>
                         </br>
-                        <div class="mt-2 message my-message float-left" id = "sendingMessage" > ${message}</div>
+                        <div class="mt-2 message other-message float-left" id = "sendingMessage" > ${message}</div>
                     </li>`
 
                 );
